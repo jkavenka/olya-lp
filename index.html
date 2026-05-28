@@ -25,13 +25,16 @@
 
     /* ─── RESET ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip; /* on html (not body) — clips page overflow without affecting fixed nav */
+    }
     body {
       font-family: 'Figtree', sans-serif;
       background: #fff;
       color: var(--color-text-primary);
       -webkit-font-smoothing: antialiased;
-      overflow-x: clip; /* hide carousel horizontal overflow without creating scroll */
+      /* No overflow-x here — that would affect the fixed nav's containing block */
     }
     img { display: block; }
     a { text-decoration: none; color: inherit; }
@@ -94,6 +97,16 @@
       color: var(--color-text-primary);
       position: relative;
       z-index: 1;
+    }
+
+    /* ── Carousel overflow clip ─────────────────────────────────── */
+    /* Wraps only the carousel so cards spill without creating a
+       page-wide scrollbar. overflow:hidden on a regular block div
+       clips reliably without affecting the fixed nav. */
+    .carousel-clip {
+      width: 100%;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     /* ══════════════════════════════════════════════════════════════
@@ -482,22 +495,24 @@
       </a>
     </div>
 
-    <!-- Carousel — in-flow, centres itself via parent align-items:center -->
-    <div class="hero-carousel anim-fade-up delay-3" aria-hidden="true">
-      <div class="hero-card-wrap">
-        <div class="hero-card hero-card--light"></div>
-      </div>
-      <div class="hero-card-wrap">
-        <div class="hero-card hero-card--mid"></div>
-      </div>
-      <div class="hero-card-wrap">
-        <div class="hero-card hero-card--light"></div>
-      </div>
-      <div class="hero-card-wrap">
-        <div class="hero-card hero-card--mid"></div>
-      </div>
-      <div class="hero-card-wrap">
-        <div class="hero-card hero-card--light"></div>
+    <!-- Carousel — clip wrapper stops cards creating horizontal scrollbar -->
+    <div class="carousel-clip anim-fade-up delay-3">
+      <div class="hero-carousel" aria-hidden="true">
+        <div class="hero-card-wrap">
+          <div class="hero-card hero-card--light"></div>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="hero-card hero-card--mid"></div>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="hero-card hero-card--light"></div>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="hero-card hero-card--mid"></div>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="hero-card hero-card--light"></div>
+        </div>
       </div>
     </div>
 
