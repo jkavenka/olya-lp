@@ -1,1 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olya — AI Content OS for European Brands</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Figtree:wght@300;400;500;600&family=Chivo+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── DESIGN TOKENS ─────────────────────────────────────────── */
+    :root {
+      --color-text-primary:     #120b39;
+      --color-text-muted:       #8b8996;
+      --color-surface-canvas:   #ffffff;
+      --color-surface-subtle:   #f7f7f8;
+      --color-border-default:   #e7e6eb;
+      --color-border-input:     #dfdfeb;
+      --color-periwinkle:       #c8d6fd;
+      --color-indigo-light:     #ebf0ff;
+      --color-indigo-strong:    #7f79e0;
+      --color-indigo-700:       #6c43f5;
+      --color-sand-light:       #fffaeb;
+      --color-sky:              #e3f8ff;
+      --color-dawn:             #f4ebff;
+      --color-cta-from:         #b0efd1;
+      --color-cta-mid:          #75f1b7;
+      --color-cta-to:           #44e0bb;
+      --radius-card:            30px;
+      --radius-input:           16px;
+      --radius-tag:             8px;
+      --max-w:                  1200px;
+      --page-px:                40px;
+    }
 
+    /* ─── RESET ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--color-surface-canvas);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+
+    /* ─── TYPOGRAPHY ────────────────────────────────────────────── */
+    .font-fraunces   { font-family: 'Fraunces', serif; font-variation-settings: 'SOFT' 0, 'WONK' 1; }
+    .font-fraunces-i { font-family: 'Fraunces', serif; font-variation-settings: 'SOFT' 0, 'WONK' 1; font-style: italic; }
+    .font-figtree    { font-family: 'Figtree', sans-serif; }
+    .font-mono       { font-family: 'Chivo Mono', monospace; }
+
+    /* ─── UTILITIES ─────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .page-wrap {
+      padding-left: var(--page-px);
+      padding-right: var(--page-px);
+    }
+
+    /* ─── CTA BUTTON ─────────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      padding: 0 24px;
+      border-radius: var(--radius-input);
+      background: radial-gradient(ellipse at 33% 16%, #b0efd1 0%, #75f1b7 62%, #44e0bb 100%);
+      font-family: 'Figtree', sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.2;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ─── TAG ────────────────────────────────────────────────────── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+      padding: 1px 6px 0;
+      border-radius: var(--radius-tag);
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .tag--periwinkle { background: var(--color-periwinkle); color: var(--color-text-primary); }
+    .tag--white      { background: var(--color-surface-canvas); color: var(--color-text-primary); }
+
+    /* ─── SECTION BROW ───────────────────────────────────────────── */
+    .brow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.36px;
+      text-transform: uppercase;
+      color: var(--color-indigo-700);
+    }
+    .brow-dot {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════════════════════ */
+    .site-nav {
+      width: 100%;
+      padding: 0 var(--page-px);
+    }
+    .site-nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .site-nav__logo {
+      height: 40px;
+      width: auto;
+    }
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      user-select: none;
+    }
+    .lang-switcher svg { width: 16px; height: 16px; }
+
+    /* ══════════════════════════════════════════════════════════════
+       HEADER / HERO
+    ══════════════════════════════════════════════════════════════ */
+    .site-header {
+      padding: 0 var(--page-px);
+    }
+    .site-header__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    /* — Text block — */
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      text-align: center;
+      width: 100%;
+    }
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 80;
+      font-size: clamp(52px, 7.5vw, 100px);
+      line-height: 0.875;
+      letter-spacing: -0.04em;
+      color: var(--color-text-primary);
+    }
+    .hero-sub {
+      font-family: 'Figtree', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+      max-width: 640px;
+    }
+
+    /* — Hero image / carousel placeholder — */
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      height: 340px;
+      border-radius: var(--radius-card);
+      overflow: visible;
+    }
+    /* colour-splash background */
+    .hero-splash {
+      position: absolute;
+      top: -160px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1008px, 110vw);
+      height: calc(100% + 260px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-splash img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* card carousel */
+    .hero-carousel {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      z-index: 1;
+    }
+    .hero-card {
+      width: 278px;
+      height: 414px;
+      border-radius: 18px;
+      flex-shrink: 0;
+      margin-right: -40px;
+    }
+    .hero-card:last-child { margin-right: 0; }
+    .hero-card--light { background: var(--color-surface-subtle); }
+    .hero-card--mid   { background: var(--color-border-default); }
+    .hero-card:nth-child(1) { transform: rotate(-3.1deg);  }
+    .hero-card:nth-child(2) { transform: rotate( 2.46deg); }
+    .hero-card:nth-child(3) { transform: rotate(-1.56deg); }
+    .hero-card:nth-child(4) { transform: rotate( 2.09deg); }
+    .hero-card:nth-child(5) { transform: rotate(-1.97deg); }
+
+    /* ══════════════════════════════════════════════════════════════
+       TICKER / RUNNING TEXT
+    ══════════════════════════════════════════════════════════════ */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .ticker-wrap::before,
+    .ticker-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .ticker-wrap::before { left: 0;  background: linear-gradient(to right,  #fff 0%, transparent 100%); }
+    .ticker-wrap::after  { right: 0; background: linear-gradient(to left,   #fff 0%, transparent 100%); }
+    .ticker-track {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker 28s linear infinite;
+      will-change: transform;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.36px;
+      text-transform: uppercase;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+    .ticker-dot {
+      font-family: 'Chivo Mono', monospace;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════════════ */
+
+    /* — Tablet (≤ 900px) — */
+    @media (max-width: 900px) {
+      :root { --page-px: 24px; }
+      .hero-headline { font-size: clamp(40px, 8vw, 72px); }
+      .hero-visual { height: 280px; }
+      .hero-carousel { top: -24px; }
+      .hero-card { width: 220px; height: 328px; }
+      .hero-card { margin-right: -30px; }
+    }
+
+    /* — Mobile (≤ 560px) — */
+    @media (max-width: 560px) {
+      :root { --page-px: 16px; }
+      .site-header__inner { gap: 48px; }
+      .hero-headline {
+        font-size: clamp(36px, 11vw, 52px);
+        line-height: 0.9;
+      }
+      .hero-sub { font-size: 14px; }
+      .hero-visual { height: 220px; }
+      .hero-splash { top: -100px; }
+      .hero-carousel { top: -16px; }
+      .hero-card { width: 140px; height: 210px; border-radius: 12px; }
+      .hero-card { margin-right: -20px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       ENTRANCE ANIMATIONS
+    ══════════════════════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-up {
+      opacity: 0;
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.22s; }
+    .delay-3 { animation-delay: 0.36s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.66s; }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════════════════ -->
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <!-- Logo (wordmark from Figma) -->
+      <a href="/" aria-label="Olya home">
+        <img
+          class="site-nav__logo"
+          src="https://www.figma.com/api/mcp/asset/ba5ed457-20fd-4469-9a9d-3163061a6729"
+          alt="Olya"
+          width="72"
+          height="40"
+        />
+      </a>
+
+      <!-- Language switcher -->
+      <button class="lang-switcher" aria-label="Switch language" aria-expanded="false">
+        <span data-i18n="lang-label">En</span>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6.5l4 3 4-3" stroke="#120b39" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════
+       HEADER / HERO
+  ══════════════════════════════════════════════════════════ -->
+  <header class="site-header" style="padding-top: 12px;">
+    <div class="site-header__inner">
+
+      <!-- Text group -->
+      <div class="hero-text">
+        <span class="tag tag--periwinkle anim-fade-up delay-1" data-i18n="hero-tag">
+          AI Content OS · Pre-launch 2026
+        </span>
+
+        <div class="anim-fade-up delay-2">
+          <h1 class="hero-headline" data-i18n="hero-headline">
+            The AI content platform<br>built for European brands
+          </h1>
+        </div>
+
+        <p class="hero-sub anim-fade-up delay-3" data-i18n="hero-sub">
+          Create AI personas, generate multilingual content, and publish across
+          Instagram, TikTok, LinkedIn, and YouTube Shorts — from one workspace.
+        </p>
+
+        <a href="#early-access" class="btn-primary anim-fade-up delay-4" data-i18n="hero-cta">
+          Join the waitlist
+        </a>
+      </div>
+
+      <!-- Visual: carousel placeholder + colour splash -->
+      <div class="hero-visual anim-fade-up delay-5">
+        <!-- Colour splash background -->
+        <div class="hero-splash">
+          <img
+            src="https://www.figma.com/api/mcp/asset/62214fd1-c37e-4712-a372-10acf3fada78"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+
+        <!-- 5 tilted card placeholders (will become videos) -->
+        <div class="hero-carousel" aria-hidden="true">
+          <div class="hero-card hero-card--light"></div>
+          <div class="hero-card hero-card--mid"></div>
+          <div class="hero-card hero-card--light"></div>
+          <div class="hero-card hero-card--mid"></div>
+          <div class="hero-card hero-card--light"></div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════
+       TICKER / RUNNING TEXT
+  ══════════════════════════════════════════════════════════ -->
+  <div class="ticker-wrap" style="margin-top: 80px;" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- First set -->
+      <span class="ticker-item">AI Influencers</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Français</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Italiano</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Deutsch</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Español</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Instagram</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">TikTok</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">LinkedIn</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">YouTube Shorts</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">GDPR-aware</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">White-label</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Analytics</span>
+      <span class="ticker-dot">･</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="ticker-item">AI Influencers</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Français</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Italiano</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Deutsch</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Español</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Instagram</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">TikTok</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">LinkedIn</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">YouTube Shorts</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">GDPR-aware</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">White-label</span>
+      <span class="ticker-dot">･</span>
+      <span class="ticker-item">Analytics</span>
+      <span class="ticker-dot">･</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       i18n DATA  (translations loaded here, used by all sections)
+  ══════════════════════════════════════════════════════════ -->
+  <script>
+    window.OLYA_I18N = {
+      en: {
+        'lang-label':    'En',
+        'hero-tag':      'AI Content OS · Pre-launch 2026',
+        'hero-headline': 'The AI content platform<br>built for European brands',
+        'hero-sub':      'Create AI personas, generate multilingual content, and publish across Instagram, TikTok, LinkedIn, and YouTube Shorts — from one workspace.',
+        'hero-cta':      'Join the waitlist',
+      },
+      fr: {
+        'lang-label':    'Fr',
+        'hero-tag':      'AI Content OS · Pré-lancement 2026',
+        'hero-headline': 'La plateforme IA pour les<br>marques européennes',
+        'hero-sub':      'Créez des personas IA, générez du contenu multilingue et publiez sur Instagram, TikTok, LinkedIn et YouTube Shorts — depuis un seul espace de travail.',
+        'hero-cta':      'Rejoindre la liste d\'attente',
+      },
+      de: {
+        'lang-label':    'De',
+        'hero-tag':      'AI Content OS · Vor dem Launch 2026',
+        'hero-headline': 'Die KI-Content-Plattform<br>für europäische Marken',
+        'hero-sub':      'Erstellen Sie KI-Personas, generieren Sie mehrsprachige Inhalte und veröffentlichen Sie auf Instagram, TikTok, LinkedIn und YouTube Shorts — aus einem Workspace.',
+        'hero-cta':      'Zur Warteliste anmelden',
+      },
+      es: {
+        'lang-label':    'Es',
+        'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
+        'hero-headline': 'La plataforma de contenido IA<br>para marcas europeas',
+        'hero-sub':      'Crea personas de IA, genera contenido multilingüe y publica en Instagram, TikTok, LinkedIn y YouTube Shorts — desde un único espacio de trabajo.',
+        'hero-cta':      'Unirse a la lista de espera',
+      },
+      it: {
+        'lang-label':    'It',
+        'hero-tag':      'AI Content OS · Pre-lancio 2026',
+        'hero-headline': 'La piattaforma AI per i contenuti<br>dei brand europei',
+        'hero-sub':      'Crea personas AI, genera contenuti multilingua e pubblica su Instagram, TikTok, LinkedIn e YouTube Shorts — da un unico spazio di lavoro.',
+        'hero-cta':      'Unisciti alla lista d\'attesa',
+      },
+    };
+
+    /* ── Language switcher logic ── */
+    (function () {
+      const langs = ['en', 'fr', 'de', 'es', 'it'];
+      let current = 'en';
+
+      function applyLang(lang) {
+        const dict = window.OLYA_I18N[lang] || window.OLYA_I18N.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key] !== undefined) {
+            // Allow HTML (e.g. <br>) in headline
+            el.innerHTML = dict[key];
+          }
+        });
+        document.documentElement.lang = lang;
+        current = lang;
+      }
+
+      document.querySelector('.lang-switcher').addEventListener('click', function () {
+        const idx = langs.indexOf(current);
+        const next = langs[(idx + 1) % langs.length];
+        applyLang(next);
+      });
+    }());
+  </script>
+
+</body>
+</html>
