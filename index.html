@@ -24,12 +24,12 @@
 
     /* ─── RESET ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html {
-      scroll-behavior: smooth;
-      /* Clip overflow on html — this is the viewport root so fixed elements
-         still reference the true viewport, but horizontal overflow is hidden */
+    html, body {
+      /* Both must have overflow-x hidden — html alone is ignored by browsers
+         when body doesn't also have it (body overflow promotes to viewport) */
       overflow-x: hidden;
     }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Figtree', sans-serif;
       background: #fff;
@@ -148,6 +148,8 @@
     ══════════════════════════════════════════════════════════════ */
     .site-header {
       padding-top: calc(var(--nav-h) + 80px);
+      /* Contain the carousel overflow so it cannot stretch the document width */
+      overflow: hidden;
     }
 
     /* ── Text — centred, padded, max-width ── */
