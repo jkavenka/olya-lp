@@ -186,14 +186,11 @@
     .hero-carousel-wrap {
       /* Use 100vw so width resolves to viewport, not stretched document width.
          margin-left negative compensates for any body padding. */
-      width: 100vw;
+      width: 100%;
+      max-width: 100%;
       position: relative;
-      left: 50%;
-      transform: translateX(-50%);
       margin-top: 80px;
       height: 430px;
-      /* clip-path clips overflow without creating a scroll container */
-      clip-path: inset(0);
     }
 
     /* Splash — absolute, centred, behind cards.
@@ -225,12 +222,15 @@
     .hero-carousel {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
       z-index: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
       height: 100%;
+      max-width: 100%;
+      height: auto;
     }
 
     /*
@@ -245,12 +245,9 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      /* wrapper height = card height + rotation envelope */
       height: 430px;
       width: 294px;
-      margin-right: -40px;
     }
-    .hero-card-wrap:last-child { margin-right: 0; }
 
     .hero-card {
       width: 278px;
@@ -365,9 +362,7 @@
       .hero-card-wrap {
         height: 378px;
         width: 294px;
-        margin-right: -30px;
       }
-      .hero-card-wrap:last-child { margin-right: 0; }
 
       /* Tablet card size */
       .hero-card { width: 278px; height: 360px; }
@@ -409,9 +404,7 @@
       .hero-card-wrap {
         height: 342px;
         width: 254px;
-        margin-right: -40px;
       }
-      .hero-card-wrap:last-child { margin-right: 0; }
 
       /* Mobile card size */
       .hero-card { width: 240px; height: 320px; border-radius: 14px; }
