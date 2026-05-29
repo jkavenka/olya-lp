@@ -449,22 +449,32 @@
     /* ── Swoosh background ── */
     /* position:absolute removes from flow; section overflow:hidden clips it.
        max-width:none lets it be wider than the container without causing scroll. */
+    /* Swoosh: outer div positions, inner div rotates (matches Figma structure) */
     .cta-swoosh {
       position: absolute;
-      /* Figma desktop: left:-108.77px, top:-248.78px relative to content div.
-         Content div has pt-80px inside section, so swoosh top from section = -248+80 = ~-169px */
+      /* Desktop: content has pt-80px; swoosh top:-248.78 relative to content
+         => section top: -248.78 + 80 = -168.78px */
       top: -169px;
       left: -109px;
       width: 1387px;
+      height: 1018px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       pointer-events: none;
       z-index: 0;
+    }
+    .cta-swoosh__inner {
+      flex: none;
+      transform: rotate(13.95deg);
+      width: 1245px;
+      height: 739px;
     }
     .cta-swoosh img {
       display: block;
       width: 100%;
+      height: 100%;
       max-width: none;
-      transform: rotate(13.95deg);
-      transform-origin: center center;
     }
 
     /* ── Inner content ── */
@@ -506,17 +516,34 @@
       color: var(--color-text-primary);
     }
 
-    /* Arrow illustration — positioned to point toward form */
+    /* Arrow illustration: outer=position, inner=rotation */
     .cta-arrow {
-      margin-top: 12px;
-      width: 200px;          /* visual width, uncropped */
+      position: absolute;
+      /* Desktop: content pt-80px; arrow top:253px relative to content
+         => section top: 253 + 80 = 333px; left:180px relative to content,
+         content has px-40px so relative to section: 180 + 40 = 220px */
+      top: 333px;
+      left: 220px;
+      width: 362px;
+      height: 202px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .cta-arrow__inner {
+      flex: none;
       transform: rotate(12.91deg);
-      transform-origin: left center;
+      width: 342px;
+      height: 129px;
     }
     .cta-arrow img {
       display: block;
       width: 100%;
+      height: 100%;
       max-width: none;
+      object-fit: cover;
     }
 
     /* ── Form card ── */
@@ -597,17 +624,13 @@
       transition: background 0.12s, border-color 0.12s;
     }
     .field-checkbox__input:checked + .field-checkbox__box {
-      background: var(--color-indigo-700);
-      border-color: var(--color-indigo-700);
-    }
-    .field-checkbox__input:checked + .field-checkbox__box::after {
-      content: '';
-      display: block;
-      width: 9px;
-      height: 5px;
-      border-left: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      transform: rotate(-45deg) translateY(-1px);
+      background: transparent;
+      border-color: transparent;
+      /* Show Figma checked state image */
+      background-image: url("https://www.figma.com/api/mcp/asset/58362694-e6b0-450e-8573-dfc101c57ab4");
+      background-size: 14px 14px;
+      background-repeat: no-repeat;
+      background-position: center;
     }
     .field-checkbox__input:focus-visible + .field-checkbox__box {
       outline: 2px solid var(--color-indigo-700);
@@ -648,12 +671,29 @@
     @media (max-width: 900px) {
       .cta-section { padding: 0 var(--page-px) 64px; }
 
-      /* Swoosh: Figma tablet left:-227, top:-118 relative to content (pt-64px)
-         => top from section: -118+64 = -54px */
+      /* Swoosh tablet: left:-227, top:-118 rel to content (pt-64px)
+         => section top: -118+64=-54px */
       .cta-swoosh {
         top: -54px;
         left: -227px;
         width: 1043px;
+        height: 902px;
+      }
+      .cta-swoosh__inner { width: 899px; height: 706px; }
+
+      /* Arrow tablet: left:398, top:70.91 rel to content (pt-64, px-40)
+         => section top: 70.91+64=134.91px; left: 398+40=438px
+         scaleY(-1) + rotate(36.53deg) */
+      .cta-arrow {
+        top: 135px;
+        left: 438px;
+        width: 250px;
+        height: 218px;
+      }
+      .cta-arrow__inner {
+        transform: scaleY(-1) rotate(36.53deg);
+        width: 243px;
+        height: 92px;
       }
 
       .cta-inner {
@@ -669,17 +709,6 @@
 
       .cta-headline { font-size: 48px; }
 
-      /* Arrow on tablet: flipped vertically, different rotation — sits above form */
-      .cta-arrow {
-        position: absolute;
-        top: 71px;
-        right: 0;
-        width: 150px;
-        transform: scaleY(-1) rotate(36.53deg);
-        transform-origin: right top;
-        margin-top: 0;
-      }
-
       .cta-form-card {
         width: 100%;
         border-radius: var(--radius-card);
@@ -692,12 +721,29 @@
     @media (max-width: 560px) {
       .cta-section { padding: 0 var(--page-px) 56px; }
 
-      /* Swoosh: Figma mobile left:-267.82, top:64.37 relative to content (py-56px)
-         => top from section: 64+56 = ~120px */
+      /* Swoosh mobile: left:-267.82, top:64.37 rel to content (py-56px)
+         => section top: 64.37+56=120.37px */
       .cta-swoosh {
         top: 120px;
         left: -268px;
         width: 707px;
+        height: 792px;
+      }
+      .cta-swoosh__inner { width: 560px; height: 677px; }
+
+      /* Arrow mobile: left:246.36, top:25.99 rel to content (py-56, px-16)
+         => section top: 25.99+56=81.99px; left: 246.36+16=262px
+         scaleY(-1) + rotate(80.89deg) */
+      .cta-arrow {
+        top: 82px;
+        left: 262px;
+        width: 130px;
+        height: 256px;
+      }
+      .cta-arrow__inner {
+        transform: scaleY(-1) rotate(80.89deg);
+        width: 244px;
+        height: 92px;
       }
 
       .cta-inner {
@@ -712,17 +758,6 @@
       }
 
       .cta-headline { font-size: 32px; line-height: 0.95; }
-
-      /* Arrow on mobile: top-right of section, different rotation */
-      .cta-arrow {
-        position: absolute;
-        top: 26px;
-        right: 0;
-        width: 80px;
-        transform: scaleY(-1) rotate(80.89deg);
-        transform-origin: right top;
-        margin-top: 0;
-      }
 
       .cta-form-card {
         width: 100%;
@@ -880,13 +915,15 @@
   ══════════════════════════════════════════════════════════ -->
   <section class="cta-section" id="early-access">
 
-    <!-- bg-swoosh — absolute, clipped by section overflow:hidden -->
+    <!-- bg-swoosh — absolute inside section, clipped by section overflow:hidden -->
     <!-- TODO: replace src with /assets/images/swoosh.png once downloaded -->
     <div class="cta-swoosh" aria-hidden="true">
-      <img
-        src="https://www.figma.com/api/mcp/asset/5cc7c7f7-e2b7-4c6d-83c3-02902984f99e"
-        alt=""
-      />
+      <div class="cta-swoosh__inner">
+        <img
+          src="https://www.figma.com/api/mcp/asset/5cc7c7f7-e2b7-4c6d-83c3-02902984f99e"
+          alt=""
+        />
+      </div>
     </div>
 
     <div class="cta-inner">
@@ -895,13 +932,15 @@
       <div class="cta-txt">
         <h2 class="cta-headline" data-i18n="cta-headline">Be first in line</h2>
         <p class="cta-body" data-i18n="cta-body">Olya is launching in July 2026. We&#8217;re onboarding our founding users now &#8212; the agencies, brands, and creators who&#8217;ll shape the product and get lifetime early-access pricing.</p>
-        <!-- arrow illustration — desktop/tablet only -->
+        <!-- arrow illustration -->
         <!-- TODO: replace src with /assets/images/arrow.png once downloaded -->
         <div class="cta-arrow" aria-hidden="true">
-          <img
-            src="https://www.figma.com/api/mcp/asset/dbb63ce2-38e8-4810-ad08-e58da29751ca"
-            alt=""
-          />
+          <div class="cta-arrow__inner">
+            <img
+              src="https://www.figma.com/api/mcp/asset/dbb63ce2-38e8-4810-ad08-e58da29751ca"
+              alt=""
+            />
+          </div>
         </div>
       </div>
 
