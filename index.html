@@ -435,6 +435,302 @@
       .card-mobile:nth-of-type(3) .hero-card { transform: rotate( 5.19deg); }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       FORM SECTION — "Be first in line"
+    ══════════════════════════════════════════════════════════════ */
+
+    .cta-section {
+      position: relative;
+      overflow: hidden;          /* clips swoosh without expanding document */
+      padding: 0 var(--page-px) 120px;
+    }
+
+    /* ── Swoosh background ── */
+    /* position:absolute removes from flow; section overflow:hidden clips it.
+       max-width:none lets it be wider than the container without causing scroll. */
+    .cta-swoosh {
+      position: absolute;
+      /* Figma desktop: left:-108.77px, top:-248.78px relative to content div.
+         Content div has pt-80px inside section, so swoosh top from section = -248+80 = ~-169px */
+      top: -169px;
+      left: -109px;
+      width: 1387px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cta-swoosh img {
+      display: block;
+      width: 100%;
+      max-width: none;
+      transform: rotate(13.95deg);
+      transform-origin: center center;
+    }
+
+    /* ── Inner content ── */
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
+      align-items: flex-start;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-top: 80px;
+    }
+
+    /* ── Left text block ── */
+    .cta-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 40px;
+      width: 440px;
+      flex-shrink: 0;
+    }
+    .cta-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      color: var(--color-text-primary);
+    }
+    .cta-body {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    /* Arrow illustration — positioned to point toward form */
+    .cta-arrow {
+      margin-top: 12px;
+      width: 200px;          /* visual width, uncropped */
+      transform: rotate(12.91deg);
+      transform-origin: left center;
+    }
+    .cta-arrow img {
+      display: block;
+      width: 100%;
+      max-width: none;
+    }
+
+    /* ── Form card ── */
+    .cta-form-card {
+      flex: 1 0 0;
+      min-width: 0;
+      background: #fff;
+      border-radius: var(--radius-card);
+      box-shadow: 0 10px 15px rgba(127, 121, 224, 0.2);
+      padding: 32px;
+    }
+
+    /* ── Form layout ── */
+    .cta-form { display: flex; flex-direction: column; gap: 16px; }
+    .cta-inputs { display: flex; flex-direction: column; gap: 16px; }
+
+    /* ── Field (label + input) ── */
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field__label {
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.36px;
+      text-transform: uppercase;
+      color: var(--color-text-primary);
+    }
+    .field__input {
+      width: 100%;
+      height: 44px;
+      padding: 11px 16px 12px 12px;
+      border: 1px solid #dfdfeb;
+      border-radius: var(--radius-input);
+      background: #fff;
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+      box-shadow: inset 0 2px 6px rgba(18, 11, 57, 0.1);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field__input:focus {
+      border-color: var(--color-indigo-strong);
+    }
+    .field__input.is-invalid {
+      border-color: #e05c5c;
+    }
+
+    /* ── Checkbox ── */
+    .field-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+    .field-checkbox__input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .field-checkbox__box {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      border: 1px solid #908ca3;
+      border-radius: 4px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .field-checkbox__input:checked + .field-checkbox__box {
+      background: var(--color-indigo-700);
+      border-color: var(--color-indigo-700);
+    }
+    .field-checkbox__input:checked + .field-checkbox__box::after {
+      content: '';
+      display: block;
+      width: 9px;
+      height: 5px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+    .field-checkbox__input:focus-visible + .field-checkbox__box {
+      outline: 2px solid var(--color-indigo-700);
+      outline-offset: 2px;
+    }
+    .field-checkbox__label {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+    .field-checkbox__link {
+      text-decoration: underline;
+      color: inherit;
+    }
+    .field-checkbox__link:hover { opacity: 0.7; }
+
+    /* ── Submit button (full-width inside form) ── */
+    .cta-submit {
+      width: 100%;
+      height: 48px;
+    }
+
+    /* ── Inline error message ── */
+    .cta-form__error {
+      font-family: 'Figtree', sans-serif;
+      font-size: 13px;
+      color: #e05c5c;
+      min-height: 0;
+      display: none;
+    }
+    .cta-form__error.is-visible { display: block; }
+
+    /* ══════════════════════════════════════════════════════════════
+       FORM — TABLET ≤ 900px
+    ══════════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .cta-section { padding: 0 var(--page-px) 64px; }
+
+      /* Swoosh: Figma tablet left:-227, top:-118 relative to content (pt-64px)
+         => top from section: -118+64 = -54px */
+      .cta-swoosh {
+        top: -54px;
+        left: -227px;
+        width: 1043px;
+      }
+
+      .cta-inner {
+        flex-direction: column;
+        gap: 56px;
+        padding-top: 64px;
+      }
+
+      .cta-txt {
+        width: 100%;
+        padding-top: 40px;
+      }
+
+      .cta-headline { font-size: 48px; }
+
+      /* Arrow on tablet: flipped vertically, different rotation — sits above form */
+      .cta-arrow {
+        position: absolute;
+        top: 71px;
+        right: 0;
+        width: 150px;
+        transform: scaleY(-1) rotate(36.53deg);
+        transform-origin: right top;
+        margin-top: 0;
+      }
+
+      .cta-form-card {
+        width: 100%;
+        border-radius: var(--radius-card);
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       FORM — MOBILE ≤ 560px
+    ══════════════════════════════════════════════════════════════ */
+    @media (max-width: 560px) {
+      .cta-section { padding: 0 var(--page-px) 56px; }
+
+      /* Swoosh: Figma mobile left:-267.82, top:64.37 relative to content (py-56px)
+         => top from section: 64+56 = ~120px */
+      .cta-swoosh {
+        top: 120px;
+        left: -268px;
+        width: 707px;
+      }
+
+      .cta-inner {
+        flex-direction: column;
+        gap: 48px;
+        padding-top: 56px;
+      }
+
+      .cta-txt {
+        width: 100%;
+        padding-top: 0;
+      }
+
+      .cta-headline { font-size: 32px; line-height: 0.95; }
+
+      /* Arrow on mobile: top-right of section, different rotation */
+      .cta-arrow {
+        position: absolute;
+        top: 26px;
+        right: 0;
+        width: 80px;
+        transform: scaleY(-1) rotate(80.89deg);
+        transform-origin: right top;
+        margin-top: 0;
+      }
+
+      .cta-form-card {
+        width: 100%;
+        border-radius: 20px;
+        padding: 24px 16px;
+      }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -578,7 +874,77 @@
     </div>
   </div>
 
-  <main id="early-access" class="site-main"></main>
+
+  <!-- ══════════════════════════════════════════════════════════
+       FORM SECTION — "Be first in line"
+  ══════════════════════════════════════════════════════════ -->
+  <section class="cta-section" id="early-access">
+
+    <!-- bg-swoosh — absolute, clipped by section overflow:hidden -->
+    <!-- TODO: replace src with /assets/images/swoosh.png once downloaded -->
+    <div class="cta-swoosh" aria-hidden="true">
+      <img
+        src="https://www.figma.com/api/mcp/asset/5cc7c7f7-e2b7-4c6d-83c3-02902984f99e"
+        alt=""
+      />
+    </div>
+
+    <div class="cta-inner">
+
+      <!-- Left: text + arrow -->
+      <div class="cta-txt">
+        <h2 class="cta-headline" data-i18n="cta-headline">Be first in line</h2>
+        <p class="cta-body" data-i18n="cta-body">Olya is launching in July 2026. We&#8217;re onboarding our founding users now &#8212; the agencies, brands, and creators who&#8217;ll shape the product and get lifetime early-access pricing.</p>
+        <!-- arrow illustration — desktop/tablet only -->
+        <!-- TODO: replace src with /assets/images/arrow.png once downloaded -->
+        <div class="cta-arrow" aria-hidden="true">
+          <img
+            src="https://www.figma.com/api/mcp/asset/dbb63ce2-38e8-4810-ad08-e58da29751ca"
+            alt=""
+          />
+        </div>
+      </div>
+
+      <!-- Right: form card -->
+      <div class="cta-form-card">
+        <form class="cta-form" id="waitlist-form" novalidate>
+          <div class="cta-inputs">
+
+            <div class="field">
+              <label class="field__label" for="f-name" data-i18n="field-name">First name</label>
+              <input class="field__input" id="f-name" name="name" type="text" autocomplete="given-name" required />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="f-email" data-i18n="field-email">Email</label>
+              <input class="field__input" id="f-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="f-company" data-i18n="field-company">Company name (optional)</label>
+              <input class="field__input" id="f-company" name="company" type="text" autocomplete="organization" />
+            </div>
+
+            <label class="field-checkbox">
+              <input class="field-checkbox__input" type="checkbox" name="terms" required />
+              <span class="field-checkbox__box"></span>
+              <span class="field-checkbox__label" data-i18n="field-terms">
+                I have read and agree to the <a class="field-checkbox__link" href="#" target="_blank" rel="noopener" data-i18n-href="terms-url">Terms of Service</a>
+              </span>
+            </label>
+
+          </div>
+
+          <button class="btn-primary cta-submit" type="submit" data-i18n="cta-submit">
+            Join the waitlist
+          </button>
+
+          <p class="cta-form__error" id="form-error" role="alert" aria-live="polite"></p>
+        </form>
+      </div>
+
+    </div>
+  </section>
 
   <!-- i18n -->
   <script>
@@ -590,6 +956,13 @@
       'hero-cta':      'Join the waitlist',
       'nav-cta-full':  'Join the waitlist',
       'nav-cta-short': 'Join',
+      'cta-headline': 'Be first in line',
+      'cta-body': 'Olya is launching in July 2026. We’re onboarding our founding users now — the agencies, brands, and creators who’ll shape the product and get lifetime early-access pricing.',
+      'field-name': 'First name',
+      'field-email': 'Email',
+      'field-company': 'Company name (optional)',
+      'field-terms': 'I have read and agree to the <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Terms of Service</a>',
+      'cta-submit': 'Join the waitlist',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -598,6 +971,13 @@
       'hero-cta':      'Rejoindre la liste d\'attente',
       'nav-cta-full':  'Rejoindre la liste',
       'nav-cta-short': 'Rejoindre',
+      'cta-headline': 'Soyez parmi les premiers',
+      'cta-body': 'Olya sera lancée en juillet 2026. Nous accueillons dès maintenant nos utilisateurs fondateurs — les agences, marques et créateurs qui façonneront le produit et bénéficieront d’une tarification à vie.',
+      'field-name': 'Prénom',
+      'field-email': 'E-mail',
+      'field-company': 'Nom de l’entreprise (facultatif)',
+      'field-terms': 'J’ai lu et j’accepte les <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Conditions d’utilisation</a>',
+      'cta-submit': 'Rejoindre la liste d’attente',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -606,6 +986,13 @@
       'hero-cta':      'Zur Warteliste anmelden',
       'nav-cta-full':  'Warteliste beitreten',
       'nav-cta-short': 'Anmelden',
+      'cta-headline': 'Seien Sie unter den Ersten',
+      'cta-body': 'Olya startet im Juli 2026. Wir nehmen jetzt unsere Gründungsnutzer auf — die Agenturen, Marken und Creators, die das Produkt mitgestalten und lebenslange Frühzugangspreise erhalten.',
+      'field-name': 'Vorname',
+      'field-email': 'E-Mail',
+      'field-company': 'Firmenname (optional)',
+      'field-terms': 'Ich habe die <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Nutzungsbedingungen</a> gelesen und akzeptiere sie.',
+      'cta-submit': 'Zur Warteliste anmelden',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -614,6 +1001,13 @@
       'hero-cta':      'Unisciti alla lista d\'attesa',
       'nav-cta-full':  'Lista d\'attesa',
       'nav-cta-short': 'Unisciti',
+      'cta-headline': 'Sii tra i primi',
+      'cta-body': 'Olya sarà lanciata a luglio 2026. Stiamo raccogliendo i nostri utenti fondatori — le agenzie, i brand e i creator che daranno forma al prodotto e otterranno prezzi early-access a vita.',
+      'field-name': 'Nome',
+      'field-email': 'Email',
+      'field-company': 'Nome azienda (opzionale)',
+      'field-terms': 'Ho letto e accetto i <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Termini di servizio</a>',
+      'cta-submit': 'Unisciti alla lista d’attesa',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -622,6 +1016,13 @@
       'hero-cta':      'Unirse a la lista de espera',
       'nav-cta-full':  'Lista de espera',
       'nav-cta-short': 'Unirse',
+      'cta-headline': 'Sé el primero en la lista',
+      'cta-body': 'Olya se lanza en julio de 2026. Estamos incorporando ahora a nuestros usuarios fundadores — las agencias, marcas y creadores que darán forma al producto y obtendrán precios de acceso anticipado de por vida.',
+      'field-name': 'Nombre',
+      'field-email': 'Correo electrónico',
+      'field-company': 'Nombre de la empresa (opcional)',
+      'field-terms': 'He leído y acepto los <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Términos de servicio</a>',
+      'cta-submit': 'Unirse a la lista de espera',
     },
   };
   (function () {
@@ -638,5 +1039,73 @@
   }());
   </script>
 
+
+  <!-- Form validation -->
+  <script>
+  (function () {
+    var form    = document.getElementById('waitlist-form');
+    var errBox  = document.getElementById('form-error');
+    if (!form) return;
+
+    var ERRORS = {
+      en: { name: 'Please enter your first name.', email: 'Please enter a valid email address.', terms: 'Please agree to the Terms of Service.' },
+      fr: { name: 'Veuillez entrer votre prénom.', email: 'Veuillez entrer une adresse e-mail valide.', terms: 'Veuillez accepter les conditions d'utilisation.' },
+      de: { name: 'Bitte geben Sie Ihren Vornamen ein.', email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.', terms: 'Bitte akzeptieren Sie die Nutzungsbedingungen.' },
+      it: { name: 'Inserisci il tuo nome.', email: 'Inserisci un indirizzo email valido.', terms: 'Accetta i Termini di servizio.' },
+      es: { name: 'Por favor, introduce tu nombre.', email: 'Por favor, introduce un correo electrónico válido.', terms: 'Por favor, acepta los Términos de servicio.' },
+    };
+
+    function getLang() {
+      return document.getElementById('lang-select').value || 'en';
+    }
+
+    function showError(msg) {
+      errBox.textContent = msg;
+      errBox.classList.add('is-visible');
+    }
+
+    function clearError() {
+      errBox.textContent = '';
+      errBox.classList.remove('is-visible');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearError();
+
+      var lang   = getLang();
+      var errs   = ERRORS[lang] || ERRORS.en;
+      var name   = form.querySelector('#f-name');
+      var email  = form.querySelector('#f-email');
+      var terms  = form.querySelector('[name="terms"]');
+
+      // Reset
+      [name, email].forEach(function (el) { el.classList.remove('is-invalid'); });
+
+      // Validate
+      if (!name.value.trim()) {
+        name.classList.add('is-invalid');
+        name.focus();
+        showError(errs.name);
+        return;
+      }
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email.value.trim())) {
+        email.classList.add('is-invalid');
+        email.focus();
+        showError(errs.email);
+        return;
+      }
+      if (!terms.checked) {
+        showError(errs.terms);
+        return;
+      }
+
+      // TODO: submit to Google Apps Script endpoint
+      // fetch('YOUR_APPS_SCRIPT_URL', { method: 'POST', body: new FormData(form) })
+      console.log('Form valid — ready for submission endpoint');
+    });
+  }());
+  </script>
 </body>
 </html>
