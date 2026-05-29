@@ -449,26 +449,22 @@
     /* ── Swoosh background ── */
     /* position:absolute removes from flow; section overflow:hidden clips it.
        max-width:none lets it be wider than the container without causing scroll. */
-    /* Swoosh — pre-rotated SVGs, no transform needed.
-       Section has overflow:hidden so they clip at section edges. */
+    /* Swoosh — pre-rotated SVGs scaled to section width.
+       width:100% on img scales SVG to fill the section.
+       Section overflow:hidden clips any excess. */
     .cta-swoosh {
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       pointer-events: none;
       z-index: 0;
     }
     .cta-swoosh img {
       display: block;
-      max-width: none;  /* allow SVG to render at natural size */
+      width: 100%;
+      height: auto;
     }
-    /* Desktop swoosh: 1223×527px */
-    .cta-swoosh--desktop { top: -60px; left: -40px; }
-    .cta-swoosh--desktop img { width: 1223px; height: 527px; }
-    /* Tablet swoosh: 800×556px */
-    .cta-swoosh--tablet { top: -80px; left: -80px; }
-    .cta-swoosh--tablet img { width: 800px; height: 556px; }
-    /* Mobile swoosh: 375×571px */
-    .cta-swoosh--mobile { top: 0; left: -40px; }
-    .cta-swoosh--mobile img { width: 375px; height: 571px; }
 
     /* Show/hide per breakpoint */
     .cta-swoosh--desktop { display: block; }
@@ -672,19 +668,7 @@
       .cta-swoosh--desktop { display: none; }
       .cta-swoosh--tablet  { display: block; }
       .cta-swoosh--mobile  { display: none; }
-
-      /* Arrow tablet */
-      .cta-arrow {
-        top: 135px;
-        left: 438px;
-        width: 250px;
-        height: 218px;
-      }
-      .cta-arrow__inner {
-        transform: scaleY(-1) rotate(36.53deg);
-        width: 243px;
-        height: 92px;
-      }
+      .cta-arrow { display: none; }
 
       .cta-inner {
         flex-direction: column;
