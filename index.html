@@ -187,20 +187,20 @@
       max-width: 720px;
     }
 
-    /* ── Carousel area — full width, gap-80px below text ── */
+    /* ── Carousel area — full width, gap below text ── */
     .hero-carousel-wrap {
-      position: relative;   /* splash anchor */
+      position: relative;
       width: 100%;
-      margin-top: 80px;     /* gap between text and carousel */
+      margin-top: 80px;
+      height: 430px; /* desktop card envelope height — gives wrap explicit height */
     }
 
-    /* Splash — absolute inside carousel-wrap, centred, behind cards */
+    /* Splash — absolute, centred, behind cards */
     .hero-splash {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      /* Desktop: 1008×638, centred behind the carousel row */
       width: 1008px;
       height: 638px;
       pointer-events: none;
@@ -212,14 +212,22 @@
       object-fit: fill;
     }
 
-    /* Carousel row — flex, centred, full width, z above splash */
+    /*
+      Carousel row — absolutely centred so overflow clips symmetrically.
+      justify-content:center on width:100% fails when cards > viewport:
+      browsers push overflow to the trailing edge only (right in LTR).
+      position:absolute + left:50% + translateX(-50%) anchors the row's
+      midpoint to the viewport centre so both sides clip equally.
+    */
     .hero-carousel {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 100%;
+      height: 100%;
     }
 
     /*
@@ -338,8 +346,6 @@
 
       .hero-headline { font-size: 80px; line-height: 0.80; }
       .hero-text__copy { gap: 20px; }
-      .hero-carousel-wrap { margin-top: 80px; }
-
       /* Splash: centred, 843×534 */
       .hero-splash { width: 843px; height: 534px; }
       .hero-splash img { width: 843px; height: 534px; }
@@ -348,6 +354,9 @@
       .card-desktop { display: none; }
       .card-tablet  { display: flex; }
       .card-mobile  { display: none; }
+
+      /* Tablet wrap height */
+      .hero-carousel-wrap { height: 378px; margin-top: 80px; }
 
       /* Tablet card wrappers */
       .hero-card-wrap {
@@ -381,8 +390,6 @@
       .site-header { padding-top: 120px; }
       .hero-headline { font-size: 40px; line-height: 0.85; letter-spacing: -0.02em; }
       .hero-text__copy { gap: 20px; }
-      .hero-carousel-wrap { margin-top: 48px; }
-
       /* Splash: centred, 841×533 */
       .hero-splash { width: 841px; height: 533px; }
       .hero-splash img { width: 841px; height: 533px; }
@@ -391,6 +398,9 @@
       .card-desktop { display: none; }
       .card-tablet  { display: none; }
       .card-mobile  { display: flex; }
+
+      /* Mobile wrap height */
+      .hero-carousel-wrap { height: 342px; margin-top: 48px; }
 
       /* Mobile card wrappers */
       .hero-card-wrap {
