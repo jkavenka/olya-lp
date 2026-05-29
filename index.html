@@ -24,11 +24,6 @@
 
     /* ─── RESET ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      /* Both must have overflow-x hidden — html alone is ignored by browsers
-         when body doesn't also have it (body overflow promotes to viewport) */
-      overflow-x: hidden;
-    }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Figtree', sans-serif;
@@ -148,8 +143,6 @@
     ══════════════════════════════════════════════════════════════ */
     .site-header {
       padding-top: calc(var(--nav-h) + 80px);
-      /* Contain the carousel overflow so it cannot stretch the document width */
-      overflow: hidden;
     }
 
     /* ── Text — centred, padded, max-width ── */
@@ -191,13 +184,21 @@
 
     /* ── Carousel area — full width, gap below text ── */
     .hero-carousel-wrap {
+      /* Use 100vw so width resolves to viewport, not stretched document width.
+         margin-left negative compensates for any body padding. */
+      width: 100vw;
       position: relative;
-      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
       margin-top: 80px;
-      height: 430px; /* desktop card envelope height — gives wrap explicit height */
+      height: 430px;
+      /* clip-path clips overflow without creating a scroll container */
+      clip-path: inset(0);
     }
 
-    /* Splash — absolute, centred, behind cards */
+    /* Splash — absolute, centred, behind cards.
+       Fixed px width is fine here because .hero-carousel-wrap already has
+       clip-path:inset(0) so the splash cannot expand the document. */
     .hero-splash {
       position: absolute;
       top: 50%;
@@ -209,9 +210,9 @@
       z-index: 0;
     }
     .hero-splash img {
+      display: block;
       width: 1008px;
       height: 638px;
-      object-fit: fill;
     }
 
     /*
@@ -358,7 +359,7 @@
       .card-mobile  { display: none; }
 
       /* Tablet wrap height */
-      .hero-carousel-wrap { height: 378px; margin-top: 80px; }
+      .hero-carousel-wrap { height: 378px; margin-top: 80px; } /* tablet */
 
       /* Tablet card wrappers */
       .hero-card-wrap {
@@ -402,7 +403,7 @@
       .card-mobile  { display: flex; }
 
       /* Mobile wrap height */
-      .hero-carousel-wrap { height: 342px; margin-top: 48px; }
+      .hero-carousel-wrap { height: 342px; margin-top: 48px; } /* mobile */
 
       /* Mobile card wrappers */
       .hero-card-wrap {
