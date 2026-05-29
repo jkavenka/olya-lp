@@ -449,33 +449,31 @@
     /* ── Swoosh background ── */
     /* position:absolute removes from flow; section overflow:hidden clips it.
        max-width:none lets it be wider than the container without causing scroll. */
-    /* Swoosh: outer div positions, inner div rotates (matches Figma structure) */
+    /* Swoosh — pre-rotated SVGs, no transform needed.
+       Section has overflow:hidden so they clip at section edges. */
     .cta-swoosh {
       position: absolute;
-      /* Desktop: content has pt-80px; swoosh top:-248.78 relative to content
-         => section top: -248.78 + 80 = -168.78px */
-      top: -169px;
-      left: -109px;
-      width: 1387px;
-      height: 1018px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       pointer-events: none;
       z-index: 0;
     }
-    .cta-swoosh__inner {
-      flex: none;
-      transform: rotate(13.95deg);
-      width: 1245px;
-      height: 739px;
-    }
     .cta-swoosh img {
       display: block;
-      width: 100%;
-      height: 100%;
-      max-width: none;
+      max-width: none;  /* allow SVG to render at natural size */
     }
+    /* Desktop swoosh: 1223×527px */
+    .cta-swoosh--desktop { top: -60px; left: -40px; }
+    .cta-swoosh--desktop img { width: 1223px; height: 527px; }
+    /* Tablet swoosh: 800×556px */
+    .cta-swoosh--tablet { top: -80px; left: -80px; }
+    .cta-swoosh--tablet img { width: 800px; height: 556px; }
+    /* Mobile swoosh: 375×571px */
+    .cta-swoosh--mobile { top: 0; left: -40px; }
+    .cta-swoosh--mobile img { width: 375px; height: 571px; }
+
+    /* Show/hide per breakpoint */
+    .cta-swoosh--desktop { display: block; }
+    .cta-swoosh--tablet  { display: none; }
+    .cta-swoosh--mobile  { display: none; }
 
     /* ── Inner content ── */
     .cta-inner {
@@ -671,19 +669,11 @@
     @media (max-width: 900px) {
       .cta-section { padding: 0 var(--page-px) 64px; }
 
-      /* Swoosh tablet: left:-227, top:-118 rel to content (pt-64px)
-         => section top: -118+64=-54px */
-      .cta-swoosh {
-        top: -54px;
-        left: -227px;
-        width: 1043px;
-        height: 902px;
-      }
-      .cta-swoosh__inner { width: 899px; height: 706px; }
+      .cta-swoosh--desktop { display: none; }
+      .cta-swoosh--tablet  { display: block; }
+      .cta-swoosh--mobile  { display: none; }
 
-      /* Arrow tablet: left:398, top:70.91 rel to content (pt-64, px-40)
-         => section top: 70.91+64=134.91px; left: 398+40=438px
-         scaleY(-1) + rotate(36.53deg) */
+      /* Arrow tablet */
       .cta-arrow {
         top: 135px;
         left: 438px;
@@ -721,30 +711,12 @@
     @media (max-width: 560px) {
       .cta-section { padding: 0 var(--page-px) 56px; }
 
-      /* Swoosh mobile: left:-267.82, top:64.37 rel to content (py-56px)
-         => section top: 64.37+56=120.37px */
-      .cta-swoosh {
-        top: 120px;
-        left: -268px;
-        width: 707px;
-        height: 792px;
-      }
-      .cta-swoosh__inner { width: 560px; height: 677px; }
+      .cta-swoosh--desktop { display: none; }
+      .cta-swoosh--tablet  { display: none; }
+      .cta-swoosh--mobile  { display: block; }
 
-      /* Arrow mobile: left:246.36, top:25.99 rel to content (py-56, px-16)
-         => section top: 25.99+56=81.99px; left: 246.36+16=262px
-         scaleY(-1) + rotate(80.89deg) */
-      .cta-arrow {
-        top: 82px;
-        left: 262px;
-        width: 130px;
-        height: 256px;
-      }
-      .cta-arrow__inner {
-        transform: scaleY(-1) rotate(80.89deg);
-        width: 244px;
-        height: 92px;
-      }
+      /* Hide arrow on mobile */
+      .cta-arrow { display: none; }
 
       .cta-inner {
         flex-direction: column;
@@ -915,15 +887,15 @@
   ══════════════════════════════════════════════════════════ -->
   <section class="cta-section" id="early-access">
 
-    <!-- bg-swoosh — absolute inside section, clipped by section overflow:hidden -->
-    <!-- TODO: replace src with /assets/images/swoosh.png once downloaded -->
-    <div class="cta-swoosh" aria-hidden="true">
-      <div class="cta-swoosh__inner">
-        <img
-          src="https://www.figma.com/api/mcp/asset/5cc7c7f7-e2b7-4c6d-83c3-02902984f99e"
-          alt=""
-        />
-      </div>
+    <!-- Swoosh backgrounds — one per breakpoint, shown/hidden via CSS -->
+    <div class="cta-swoosh cta-swoosh--desktop" aria-hidden="true">
+      <img src="assets/images/bg-swoosh-desktop.svg" alt="" />
+    </div>
+    <div class="cta-swoosh cta-swoosh--tablet" aria-hidden="true">
+      <img src="assets/images/bg-swoosh-tablet.svg" alt="" />
+    </div>
+    <div class="cta-swoosh cta-swoosh--mobile" aria-hidden="true">
+      <img src="assets/images/bg-swoosh-mobile.svg" alt="" />
     </div>
 
     <div class="cta-inner">
