@@ -143,6 +143,7 @@
     ══════════════════════════════════════════════════════════════ */
     .site-header {
       padding-top: calc(var(--nav-h) + 80px);
+      position: relative; /* splash anchor */
     }
 
     /* ── Text — centred, padded, max-width ── */
@@ -193,14 +194,19 @@
       height: 430px;
     }
 
-    /* Splash — absolute, centred, behind cards.
-       Fixed px width is fine here because .hero-carousel-wrap already has
-       clip-path:inset(0) so the splash cannot expand the document. */
+    /* Splash — absolute inside site-header (not carousel-wrap).
+       Centred horizontally via left:50%+translateX(-50%).
+       position:absolute removes it from flow so it never causes
+       horizontal scroll. site-header has no overflow clipping so
+       splash isn't cropped top/bottom. */
     .hero-splash {
       position: absolute;
-      top: 50%;
+      /* vertically: align with where the carousel sits —
+         top of carousel = text height + gap(80px). We use bottom-anchor
+         so it stays aligned with carousel regardless of text height. */
+      bottom: 0;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       width: 1008px;
       height: 638px;
       pointer-events: none;
@@ -229,8 +235,6 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      max-width: 100%;
-      height: auto;
     }
 
     /*
@@ -450,6 +454,12 @@
   <!-- HEADER -->
   <header class="site-header">
 
+    <!-- Splash — absolute inside header, behind text and carousel, not clipped -->
+    <div class="hero-splash" aria-hidden="true">
+      <img src="https://www.figma.com/api/mcp/asset/7053ae66-7db9-4787-816f-d56f3d210576"
+        alt="" width="1008" height="638" />
+    </div>
+
     <!-- Text block — centred, max-width, padded -->
     <div class="hero-text-wrap">
       <div class="hero-text">
@@ -471,12 +481,6 @@
 
     <!-- Carousel area — full viewport width, splash + cards -->
     <div class="hero-carousel-wrap anim-fade-up delay-4" aria-hidden="true">
-
-      <!-- Splash behind cards -->
-      <div class="hero-splash">
-        <img src="https://www.figma.com/api/mcp/asset/7053ae66-7db9-4787-816f-d56f3d210576"
-          alt="" width="1008" height="638" />
-      </div>
 
       <!-- Card row — centred in full width -->
       <div class="hero-carousel">
