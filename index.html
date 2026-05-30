@@ -854,6 +854,86 @@
       .footer-credits { gap: 16px; }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       COOKIE NOTICE
+    ══════════════════════════════════════════════════════════════ */
+    .cookie-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      background: #fff;
+      border-top: 1px solid var(--color-border-default);
+      padding: 16px var(--page-px);
+    }
+    .cookie-bar__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-bar__text {
+      font-family: 'Figtree', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      flex: 1 1 0;
+    }
+    .cookie-bar__text a {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+    }
+    .cookie-bar__text a:hover { opacity: .6; }
+    .cookie-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .btn-cookie-decline {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      padding: 0 8px;
+      cursor: pointer;
+      transition: color .15s;
+      white-space: nowrap;
+    }
+    .btn-cookie-decline:hover { color: var(--color-text-primary); }
+    .btn-cookie-accept {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 20px;
+      border-radius: var(--radius-input);
+      background: radial-gradient(ellipse at 34% 16%, #b0efd1 0%, #75f1b7 62%, #44e0bb 100%);
+      font-family: 'Figtree', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-text-primary);
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn-cookie-accept:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-cookie-accept:active { transform: none; }
+
+    @media (max-width: 560px) {
+      .cookie-bar__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .cookie-bar__actions { width: 100%; justify-content: flex-end; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -1109,6 +1189,9 @@
       'footer-terms': 'Terms of Service',
       'footer-privacy': 'Privacy Policy',
       'footer-ai': 'AI Disclosure',
+      'cookie-text': 'We use strictly necessary cookies to make our site work, and optional analytics cookies to understand how you use it. See our <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Privacy Policy</a> or contact <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
+      'cookie-decline': 'Decline',
+      'cookie-accept': 'Accept',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -1130,6 +1213,9 @@
       'footer-terms': 'Conditions d\'utilisation',
       'footer-privacy': 'Politique de confidentialité',
       'footer-ai': 'Divulgation IA',
+      'cookie-text': 'Nous utilisons des cookies strictement nécessaires au fonctionnement du site, ainsi que des cookies analytiques optionnels. Consultez notre <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Politique de confidentialité</a> ou contactez <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
+      'cookie-decline': 'Refuser',
+      'cookie-accept': 'Accepter',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -1151,6 +1237,9 @@
       'footer-terms': 'Nutzungsbedingungen',
       'footer-privacy': 'Datenschutzrichtlinie',
       'footer-ai': 'KI-Offenlegung',
+      'cookie-text': 'Wir verwenden unbedingt erforderliche Cookies sowie optionale Analyse-Cookies. Weitere Infos in unserer <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Datenschutzrichtlinie</a> oder wenden Sie sich an <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
+      'cookie-decline': 'Ablehnen',
+      'cookie-accept': 'Akzeptieren',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -1172,6 +1261,9 @@
       'footer-terms': 'Termini di servizio',
       'footer-privacy': 'Informativa sulla privacy',
       'footer-ai': 'Informativa sull\'IA',
+      'cookie-text': 'Utilizziamo cookie strettamente necessari e, facoltativamente, cookie analitici. Consulta la nostra <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Informativa sulla privacy</a> o contatta <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
+      'cookie-decline': 'Rifiuta',
+      'cookie-accept': 'Accetta',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -1193,6 +1285,9 @@
       'footer-terms': 'Términos de servicio',
       'footer-privacy': 'Política de privacidad',
       'footer-ai': 'Divulgación de IA',
+      'cookie-text': 'Usamos cookies estrictamente necesarias y, opcionalmente, cookies analíticas. Consulta nuestra <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Política de privacidad</a> o contacta con <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
+      'cookie-decline': 'Rechazar',
+      'cookie-accept': 'Aceptar',
     },
   };
   (function () {
@@ -1353,5 +1448,81 @@
       </div>
     </div>
   </footer>
+
+  <!-- ══════════════════════════════════════════════════════════
+       COOKIE NOTICE
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cookie-bar" id="cookie-bar" role="region" aria-label="Cookie notice" hidden>
+    <div class="cookie-bar__inner">
+      <p class="cookie-bar__text" id="cookie-bar-text">
+        We use strictly necessary cookies to make our site work, and optional analytics cookies to understand how you use it.
+        See our <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Privacy Policy</a> or contact
+        <a href="mailto:legal@olya.tech">legal@olya.tech</a>.
+      </p>
+      <div class="cookie-bar__actions">
+        <button class="btn-cookie-decline" id="cookie-decline" data-i18n="cookie-decline">Decline</button>
+        <button class="btn-cookie-accept" id="cookie-accept" data-i18n="cookie-accept">Accept</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie consent logic -->
+  <script>
+  (function () {
+    var bar     = document.getElementById('cookie-bar');
+    var btnA    = document.getElementById('cookie-accept');
+    var btnD    = document.getElementById('cookie-decline');
+    var textEl  = document.getElementById('cookie-bar-text');
+    var STORAGE_KEY = 'olya_cookie_consent'; // 'accepted' | 'declined'
+
+    // Update cookie bar text when language changes
+    // (cookie-text key contains HTML, so we target the p directly)
+    var origApplyLang = window.__olyaApplyLang;
+
+    function updateCookieText(lang) {
+      var dict = window.OLYA_I18N[lang] || window.OLYA_I18N.en;
+      if (textEl && dict['cookie-text']) textEl.innerHTML = dict['cookie-text'];
+    }
+
+    // Show banner if no decision yet
+    var existing = localStorage.getItem(STORAGE_KEY);
+    if (!existing) {
+      bar.removeAttribute('hidden');
+    }
+
+    function saveConsent(value) {
+      localStorage.setItem(STORAGE_KEY, value);
+      bar.setAttribute('hidden', '');
+    }
+
+    btnA.addEventListener('click', function () {
+      saveConsent('accepted');
+      // TODO: initialise Google Analytics here once GA Measurement ID is set
+      // e.g. loadGA('G-XXXXXXXXXX');
+    });
+
+    btnD.addEventListener('click', function () {
+      saveConsent('declined');
+    });
+
+    // Keep cookie bar text in sync when language switches
+    // Patch the global applyLang to also update cookie text
+    var selectEls = [
+      document.getElementById('lang-select'),
+      document.getElementById('footer-lang-select'),
+    ];
+    selectEls.forEach(function (sel) {
+      if (!sel) return;
+      sel.addEventListener('change', function () {
+        updateCookieText(this.value);
+      });
+    });
+    document.querySelectorAll('.footer-lang').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        updateCookieText(this.dataset.lang);
+      });
+    });
+  }());
+  </script>
 </body>
 </html>
