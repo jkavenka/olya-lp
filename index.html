@@ -968,8 +968,8 @@
       'field-terms': 'I have read and agree to the <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Terms of Service</a>',
       'cta-submit': 'Join the waitlist',
       'server-error': 'Something went wrong. Please try again.',
-      'success-headline': 'You're on the list!',
-      'success-body': 'We'll be in touch when Olya is ready for you.',
+      'success-headline': 'You\'re on the list!',
+      'success-body': 'We\'ll be in touch when Olya is ready for you.',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -985,8 +985,8 @@
       'field-company': 'Nom de l’entreprise (facultatif)',
       'field-terms': 'J’ai lu et j’accepte les <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Conditions d’utilisation</a>',
       'cta-submit': 'Rejoindre la liste d’attente',
-      'server-error': 'Une erreur est survenue. Veuillez réessayer.',
-      'success-headline': 'Vous êtes sur la liste !',
+      'server-error': 'Une erreur est survenue. Veuillez r\u00e9essayer.',
+      'success-headline': 'Vous \u00eates sur la liste !',
       'success-body': 'Nous vous contacterons quand Olya sera prête.',
     },
     de: {
@@ -1068,7 +1068,7 @@
 
     var ERRORS = {
       en: { name: 'Please enter your first name.', email: 'Please enter a valid email address.', terms: 'Please agree to the Terms of Service.' },
-      fr: { name: 'Veuillez entrer votre prénom.', email: 'Veuillez entrer une adresse e-mail valide.', terms: 'Veuillez accepter les conditions d'utilisation.' },
+      fr: { name: 'Veuillez entrer votre prénom.', email: 'Veuillez entrer une adresse e-mail valide.', terms: 'Veuillez accepter les conditions d\'utilisation.' },
       de: { name: 'Bitte geben Sie Ihren Vornamen ein.', email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.', terms: 'Bitte akzeptieren Sie die Nutzungsbedingungen.' },
       it: { name: 'Inserisci il tuo nome.', email: 'Inserisci un indirizzo email valido.', terms: 'Accetta i Termini di servizio.' },
       es: { name: 'Por favor, introduce tu nombre.', email: 'Por favor, introduce un correo electrónico válido.', terms: 'Por favor, acepta los Términos de servicio.' },
@@ -1124,8 +1124,12 @@
       btn.disabled = true;
       btn.textContent = '…';
 
+      // Apps Script redirects cross-origin so we must use no-cors.
+      // no-cors means we can't read the response — we assume success
+      // if the request completes without a network error.
       fetch('https://script.google.com/macros/s/AKfycbxBIKeLiSyhn1xZ1ULoapPMmkEwqFgRf_5zYo1J5gjzLwL2mCWHtRThYigrRdWp0BSZ/exec', {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name:    form.querySelector('#f-name').value.trim(),
@@ -1134,16 +1138,12 @@
           lang:    getLang(),
         }),
       })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.ok) {
-          // Show success state
-          form.style.display = 'none';
-          var success = document.getElementById('form-success');
-          if (success) success.style.display = 'block';
-        } else {
-          throw new Error('Server error');
-        }
+      .then(function () {
+        // Request completed — show success (no-cors can't confirm data.ok,
+        // but if it throws it goes to catch)
+        form.style.display = 'none';
+        var success = document.getElementById('form-success');
+        if (success) success.style.display = 'block';
       })
       .catch(function () {
         var lang = getLang();
