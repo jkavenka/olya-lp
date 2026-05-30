@@ -846,31 +846,9 @@
       color: var(--color-text-primary);
     }
 
-    /* Language buttons */
-    .footer-langs {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .footer-lang {
-      font-family: 'Chivo Mono', monospace;
-      font-weight: 300;
-      font-size: 12px;
-      line-height: 1.4;
-      letter-spacing: -0.12px;
-      color: var(--color-text-muted);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: color .15s;
-    }
-    .footer-lang:hover { color: var(--color-text-primary); }
-    .footer-lang.is-active { color: var(--color-text-primary); font-weight: 500; }
 
-    /* Mobile: hide footer lang switcher (nav dropdown handles it) */
+
     @media (max-width: 560px) {
-      .footer-langs { display: none; }
       .site-footer__inner { gap: 40px; }
       .footer-links { flex-wrap: wrap; height: auto; gap: 16px; }
       .footer-credits { gap: 16px; }
@@ -1232,24 +1210,21 @@
       syncLangUI(this.value);
     });
 
-    // Footer language buttons
+    // Footer language select — synced with nav select
+    var footerSelect = document.getElementById('footer-lang-select');
+
     function syncLangUI(lang) {
-      // Sync nav dropdown
       select.value = lang;
-      // Sync footer buttons
-      document.querySelectorAll('.footer-lang').forEach(function (btn) {
-        btn.classList.toggle('is-active', btn.dataset.lang === lang);
+      if (footerSelect) footerSelect.value = lang;
+    }
+
+    if (footerSelect) {
+      footerSelect.addEventListener('change', function () {
+        applyLang(this.value);
+        syncLangUI(this.value);
       });
     }
 
-    document.querySelectorAll('.footer-lang').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        applyLang(this.dataset.lang);
-        syncLangUI(this.dataset.lang);
-      });
-    });
-
-    // Set initial active state
     syncLangUI('en');
   }());
   </script>
@@ -1365,14 +1340,15 @@
           <span>2026</span>
         </div>
 
-        <!-- Language switcher — desktop/tablet: clickable labels -->
-        <nav class="footer-langs" aria-label="Language">
-          <button class="footer-lang" data-lang="en">En</button>
-          <button class="footer-lang" data-lang="fr">Fr</button>
-          <button class="footer-lang" data-lang="de">De</button>
-          <button class="footer-lang" data-lang="es">Es</button>
-          <button class="footer-lang" data-lang="it">It</button>
-        </nav>
+        <!-- Language switcher — same dropdown as nav, all breakpoints -->
+        <label for="footer-lang-select" class="sr-only">Language</label>
+        <select id="footer-lang-select" class="lang-select" aria-label="Select language">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="it">Italiano</option>
+          <option value="es">Español</option>
+        </select>
 
       </div>
     </div>
