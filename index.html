@@ -939,6 +939,12 @@
 
           <p class="cta-form__error" id="form-error" role="alert" aria-live="polite"></p>
         </form>
+
+        <!-- Success state -->
+        <div id="form-success" style="display:none; text-align:center; padding: 40px 0;">
+          <p style="font-family:'Fraunces',serif; font-size:32px; font-weight:400; color:var(--color-text-primary); margin-bottom:12px;" data-i18n="success-headline">You're on the list!</p>
+          <p style="font-family:'Figtree',sans-serif; font-size:15px; color:var(--color-text-primary);" data-i18n="success-body">We'll be in touch when Olya is ready for you.</p>
+        </div>
       </div>
 
     </div>
@@ -961,6 +967,9 @@
       'field-company': 'Company name (optional)',
       'field-terms': 'I have read and agree to the <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Terms of Service</a>',
       'cta-submit': 'Join the waitlist',
+      'server-error': 'Something went wrong. Please try again.',
+      'success-headline': 'You're on the list!',
+      'success-body': 'We'll be in touch when Olya is ready for you.',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -976,6 +985,9 @@
       'field-company': 'Nom de l’entreprise (facultatif)',
       'field-terms': 'J’ai lu et j’accepte les <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Conditions d’utilisation</a>',
       'cta-submit': 'Rejoindre la liste d’attente',
+      'server-error': 'Une erreur est survenue. Veuillez réessayer.',
+      'success-headline': 'Vous êtes sur la liste !',
+      'success-body': 'Nous vous contacterons quand Olya sera prête.',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -991,6 +1003,9 @@
       'field-company': 'Firmenname (optional)',
       'field-terms': 'Ich habe die <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Nutzungsbedingungen</a> gelesen und akzeptiere sie.',
       'cta-submit': 'Zur Warteliste anmelden',
+      'server-error': 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.',
+      'success-headline': 'Sie stehen auf der Liste!',
+      'success-body': 'Wir melden uns, wenn Olya für Sie bereit ist.',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -1006,6 +1021,9 @@
       'field-company': 'Nome azienda (opzionale)',
       'field-terms': 'Ho letto e accetto i <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Termini di servizio</a>',
       'cta-submit': 'Unisciti alla lista d’attesa',
+      'server-error': 'Qualcosa è andato storto. Riprova.',
+      'success-headline': 'Sei nella lista!',
+      'success-body': 'Ti contatteremo quando Olya sarà pronta per te.',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -1021,6 +1039,9 @@
       'field-company': 'Nombre de la empresa (opcional)',
       'field-terms': 'He leído y acepto los <a class="field-checkbox__link" href="#" target="_blank" rel="noopener">Términos de servicio</a>',
       'cta-submit': 'Unirse a la lista de espera',
+      'server-error': 'Algo salió mal. Por favor, inténtalo de nuevo.',
+      'success-headline': '¡Estás en la lista!',
+      'success-body': 'Te avisaremos cuando Olya esté lista para ti.',
     },
   };
   (function () {
@@ -1099,9 +1120,38 @@
         return;
       }
 
-      // TODO: submit to Google Apps Script endpoint
-      // fetch('YOUR_APPS_SCRIPT_URL', { method: 'POST', body: new FormData(form) })
-      console.log('Form valid — ready for submission endpoint');
+      var btn = form.querySelector('.cta-submit');
+      btn.disabled = true;
+      btn.textContent = '…';
+
+      fetch('https://script.google.com/macros/s/AKfycbxBIKeLiSyhn1xZ1ULoapPMmkEwqFgRf_5zYo1J5gjzLwL2mCWHtRThYigrRdWp0BSZ/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    form.querySelector('#f-name').value.trim(),
+          email:   form.querySelector('#f-email').value.trim(),
+          company: form.querySelector('#f-company').value.trim(),
+          lang:    getLang(),
+        }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          // Show success state
+          form.style.display = 'none';
+          var success = document.getElementById('form-success');
+          if (success) success.style.display = 'block';
+        } else {
+          throw new Error('Server error');
+        }
+      })
+      .catch(function () {
+        var lang = getLang();
+        var errs = ERRORS[lang] || ERRORS.en;
+        showError(errs.server || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = (window.OLYA_I18N[lang] || window.OLYA_I18N.en)['cta-submit'] || 'Join the waitlist';
+      });
     });
   }());
   </script>
