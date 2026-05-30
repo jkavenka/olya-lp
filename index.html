@@ -787,6 +787,95 @@
       .cta-success__check { width: 140px; height: 140px; }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════════════ */
+    .site-footer {
+      border-top: 1px solid var(--color-border-default);
+      padding: 40px var(--page-px) 20px;
+    }
+    .site-footer__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    /* Legal links row */
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      height: 40px;
+    }
+    .footer-link {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity .15s;
+    }
+    .footer-link:hover { opacity: .6; }
+
+    /* Credits row */
+    .footer-credits {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+    }
+    .footer-logo { flex-shrink: 0; }
+    .footer-logo img { height: 40px; width: auto; display: block; }
+
+    .footer-copy {
+      flex: 1 0 0;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: -0.12px;
+      color: var(--color-text-primary);
+    }
+
+    /* Language buttons */
+    .footer-langs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .footer-lang {
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: -0.12px;
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color .15s;
+    }
+    .footer-lang:hover { color: var(--color-text-primary); }
+    .footer-lang.is-active { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Mobile: hide footer lang switcher (nav dropdown handles it) */
+    @media (max-width: 560px) {
+      .footer-langs { display: none; }
+      .site-footer__inner { gap: 40px; }
+      .footer-links { flex-wrap: wrap; height: auto; gap: 16px; }
+      .footer-credits { gap: 16px; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -1039,6 +1128,9 @@
       'server-error': 'Something went wrong. Please try again.',
       'success-headline': 'You\'re on the list!',
       'success-body': 'We\'ll be in touch when Olya is ready for you.',
+      'footer-terms': 'Terms of Service',
+      'footer-privacy': 'Privacy Policy',
+      'footer-ai': 'AI Disclosure',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -1057,6 +1149,9 @@
       'server-error': 'Une erreur est survenue. Veuillez r\u00e9essayer.',
       'success-headline': 'Vous \u00eates sur la liste !',
       'success-body': 'Nous vous contacterons quand Olya sera prête.',
+      'footer-terms': 'Conditions d\'utilisation',
+      'footer-privacy': 'Politique de confidentialité',
+      'footer-ai': 'Divulgation IA',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -1075,6 +1170,9 @@
       'server-error': 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.',
       'success-headline': 'Sie stehen auf der Liste!',
       'success-body': 'Wir melden uns, wenn Olya für Sie bereit ist.',
+      'footer-terms': 'Nutzungsbedingungen',
+      'footer-privacy': 'Datenschutzrichtlinie',
+      'footer-ai': 'KI-Offenlegung',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -1093,6 +1191,9 @@
       'server-error': 'Qualcosa è andato storto. Riprova.',
       'success-headline': 'Sei nella lista!',
       'success-body': 'Ti contatteremo quando Olya sarà pronta per te.',
+      'footer-terms': 'Termini di servizio',
+      'footer-privacy': 'Informativa sulla privacy',
+      'footer-ai': 'Informativa sull\'IA',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -1111,6 +1212,9 @@
       'server-error': 'Algo salió mal. Por favor, inténtalo de nuevo.',
       'success-headline': '¡Estás en la lista!',
       'success-body': 'Te avisaremos cuando Olya esté lista para ti.',
+      'footer-terms': 'Términos de servicio',
+      'footer-privacy': 'Política de privacidad',
+      'footer-ai': 'Divulgación de IA',
     },
   };
   (function () {
@@ -1123,7 +1227,30 @@
       });
       document.documentElement.lang = lang;
     }
-    select.addEventListener('change', function () { applyLang(this.value); });
+    select.addEventListener('change', function () {
+      applyLang(this.value);
+      syncLangUI(this.value);
+    });
+
+    // Footer language buttons
+    function syncLangUI(lang) {
+      // Sync nav dropdown
+      select.value = lang;
+      // Sync footer buttons
+      document.querySelectorAll('.footer-lang').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.dataset.lang === lang);
+      });
+    }
+
+    document.querySelectorAll('.footer-lang').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLang(this.dataset.lang);
+        syncLangUI(this.dataset.lang);
+      });
+    });
+
+    // Set initial active state
+    syncLangUI('en');
   }());
   </script>
 
@@ -1211,5 +1338,44 @@
     });
   }());
   </script>
+
+  <!-- ══════════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <!-- Top row: legal links -->
+      <div class="footer-links">
+        <a class="footer-link" href="assets/docs/terms.pdf" target="_blank" rel="noopener" data-i18n="footer-terms">Terms of Service</a>
+        <a class="footer-link" href="assets/docs/privacy.pdf" target="_blank" rel="noopener" data-i18n="footer-privacy">Privacy Policy</a>
+        <a class="footer-link" href="assets/docs/ai-disclosure.pdf" target="_blank" rel="noopener" data-i18n="footer-ai">AI Disclosure</a>
+      </div>
+
+      <!-- Bottom row: logo + copyright + language switcher -->
+      <div class="footer-credits">
+
+        <div class="footer-logo">
+          <img src="https://www.figma.com/api/mcp/asset/ba5ed457-20fd-4469-9a9d-3163061a6729"
+            alt="Olya" width="72" height="40" />
+        </div>
+
+        <div class="footer-copy">
+          <span>© Olya Tech</span>
+          <span>2026</span>
+        </div>
+
+        <!-- Language switcher — desktop/tablet: clickable labels -->
+        <nav class="footer-langs" aria-label="Language">
+          <button class="footer-lang" data-lang="en">En</button>
+          <button class="footer-lang" data-lang="fr">Fr</button>
+          <button class="footer-lang" data-lang="de">De</button>
+          <button class="footer-lang" data-lang="es">Es</button>
+          <button class="footer-lang" data-lang="it">It</button>
+        </nav>
+
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
