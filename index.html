@@ -443,7 +443,8 @@
 
     .cta-section {
       position: relative;
-      overflow: hidden;          /* clips swoosh without expanding document */
+      /* No overflow:hidden here — that would clip the success state.
+         The swoosh is absolutely positioned so it cannot cause h-scroll. */
       padding: 0 var(--page-px) 120px;
     }
 
@@ -731,7 +732,7 @@
     .cta-success {
       position: relative;
       z-index: 1;
-      display: none; /* shown via JS */
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -1010,6 +1011,17 @@
       </div>
 
     </div>
+  <!-- Success overlay — replaces cta-inner on submission -->
+  <div id="form-success" class="cta-success" aria-live="polite">
+    <div class="cta-success__check">
+      <img src="assets/images/check.png" alt="Success" />
+    </div>
+    <div class="cta-success__txt">
+      <p class="cta-success__headline" data-i18n="success-headline">You&#8217;re on the list!</p>
+      <p class="cta-success__body" data-i18n="success-body">We&#8217;ll let you know once Olya launches.</p>
+    </div>
+  </div>
+
   </section>
 
   <!-- i18n -->
