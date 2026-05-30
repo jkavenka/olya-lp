@@ -725,6 +725,72 @@
       }
     }
 
+
+    /* ── Success state ──────────────────────────────────────────── */
+    /* Replaces cta-inner; full-width, centred, same section padding */
+    .cta-success {
+      position: relative;
+      z-index: 1;
+      display: none; /* shown via JS */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      text-align: center;
+      padding: 80px var(--page-px) 0;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      animation: fadeUp .5s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    /* Check icon: Figma 239×251px container */
+    .cta-success__check {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .cta-success__check img {
+      /* Figma: image is 156.86% wide, left:-31.32%, top:-13.33% */
+      position: absolute;
+      width: 157%;
+      left: -31%;
+      top: -13%;
+    }
+    .cta-success__txt {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 640px;
+      max-width: 100%;
+    }
+    .cta-success__headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      color: var(--color-text-primary);
+    }
+    .cta-success__body {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    @media (max-width: 900px) {
+      .cta-success { padding-top: 64px; }
+      .cta-success__headline { font-size: 48px; }
+    }
+    @media (max-width: 560px) {
+      .cta-success { padding-top: 56px; }
+      .cta-success__headline { font-size: 36px; }
+      .cta-success__check { width: 140px; height: 140px; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -940,11 +1006,7 @@
           <p class="cta-form__error" id="form-error" role="alert" aria-live="polite"></p>
         </form>
 
-        <!-- Success state -->
-        <div id="form-success" style="display:none; text-align:center; padding: 40px 0;">
-          <p style="font-family:'Fraunces',serif; font-size:32px; font-weight:400; color:var(--color-text-primary); margin-bottom:12px;" data-i18n="success-headline">You're on the list!</p>
-          <p style="font-family:'Figtree',sans-serif; font-size:15px; color:var(--color-text-primary);" data-i18n="success-body">We'll be in touch when Olya is ready for you.</p>
-        </div>
+
       </div>
 
     </div>
@@ -1138,20 +1200,8 @@
           lang:    getLang(),
         }),
       })
-      .then(function () {
-        // Request completed — show success (no-cors can't confirm data.ok,
-        // but if it throws it goes to catch)
-        form.style.display = 'none';
-        var success = document.getElementById('form-success');
-        if (success) success.style.display = 'block';
-      })
-      .catch(function () {
-        var lang = getLang();
-        var errs = ERRORS[lang] || ERRORS.en;
-        showError(errs.server || 'Something went wrong. Please try again.');
-        btn.disabled = false;
-        btn.textContent = (window.OLYA_I18N[lang] || window.OLYA_I18N.en)['cta-submit'] || 'Join the waitlist';
-      });
+      .then(function () { /* success already shown */ })
+      .catch(function () { /* silent — success already shown */ });
     });
   }());
   </script>
