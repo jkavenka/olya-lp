@@ -1182,13 +1182,12 @@
         return;
       }
 
-      var btn = form.querySelector('.cta-submit');
-      btn.disabled = true;
-      btn.textContent = '…';
+      // Show success immediately — fire-and-forget the POST
+      var inner = document.querySelector('.cta-inner');
+      if (inner) inner.style.display = 'none';
+      var successEl = document.getElementById('form-success');
+      if (successEl) successEl.style.display = 'flex';
 
-      // Apps Script redirects cross-origin so we must use no-cors.
-      // no-cors means we can't read the response — we assume success
-      // if the request completes without a network error.
       fetch('https://script.google.com/macros/s/AKfycbxBIKeLiSyhn1xZ1ULoapPMmkEwqFgRf_5zYo1J5gjzLwL2mCWHtRThYigrRdWp0BSZ/exec', {
         method: 'POST',
         mode: 'no-cors',
