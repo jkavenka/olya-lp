@@ -746,11 +746,12 @@
     /* Check icon: Figma 239×251px container */
     .cta-success__check {
       width: 200px;
-      height: 200px;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    }
+    .cta-success__check img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .cta-success__txt {
       display: flex;
@@ -1008,12 +1009,7 @@
   <!-- Success overlay — replaces cta-inner on submission -->
   <div id="form-success" class="cta-success" aria-live="polite">
     <div class="cta-success__check" aria-hidden="true">
-      <svg viewBox="-10 -10 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-        <!-- Hand-drawn style circle -->
-        <path d="M100 24 C54 24 18 58 18 100 C18 142 54 178 100 178 C146 178 182 142 182 100 C182 58 146 24 100 24 C94 23.5 88 24.5 82 25" stroke="#7f79e0" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <!-- Checkmark -->
-        <path d="M62 102 L88 130 L140 72" stroke="#7f79e0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
+      <img src="assets/images/check.png" alt="" />
     </div>
     <div class="cta-success__txt">
       <p class="cta-success__headline" data-i18n="success-headline">You&#8217;re on the list!</p>
