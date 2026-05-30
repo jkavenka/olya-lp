@@ -285,6 +285,8 @@
     ══════════════════════════════════════════════════════════════ */
     .ticker-wrap {
       width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
       height: 72px;
       overflow: hidden;
       display: flex;
@@ -934,6 +936,223 @@
       .cookie-bar__actions { width: 100%; justify-content: flex-end; }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       HOW OLYA WORKS
+    ══════════════════════════════════════════════════════════════ */
+    .how-section {
+      border-top: 0.5px solid var(--color-border-default);
+      padding: 80px var(--page-px) 120px;
+    }
+    .how-section__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+
+    /* ── Section header ── */
+    .how-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    /* Left: section label */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
+    .section-label__dot {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+    .section-label__text {
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.36px;
+      text-transform: uppercase;
+      color: var(--color-indigo-700);
+      white-space: nowrap;
+    }
+    /* Right: headline + sub */
+    .how-header__right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 895px;
+    }
+    .how-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+    }
+    .how-sub {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+      max-width: 720px;
+    }
+
+    /* ── Cards grid ── */
+    .how-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* ── Individual card ── */
+    .how-card {
+      flex: 1 0 265px;
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow: hidden; /* clip collage images that overflow */
+    }
+    .how-card--indigo { background: #ebf0ff; }
+    .how-card--sand   { background: #fffaeb; }
+
+    /* Card text block */
+    .how-card__txt {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .how-card__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .how-card__headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 40;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--color-text-primary);
+    }
+    .how-card__body {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    /* Check list */
+    .how-card__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+    }
+    .how-card__check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .how-card__check-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+    .how-card__check-icon img { width: 100%; height: 100%; display: block; }
+    .how-card__check-label {
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: -0.12px;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+
+    /* Card image area */
+    .how-card__img {
+      border-radius: 22px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .how-card__img img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Desktop: card 1 = text top / image bottom; card 2 = image top / text bottom */
+    .how-card--indigo .how-card__txt { order: 0; }
+    .how-card--indigo .how-card__img { order: 1; }
+    .how-card--sand   .how-card__img { order: 0; }
+    .how-card--sand   .how-card__txt { order: 1; }
+
+    /* ── TABLET ≤ 900px ── */
+    @media (max-width: 900px) {
+      .how-section { padding: 64px var(--page-px) 64px; }
+      .how-section__inner { gap: 56px; }
+
+      /* Header: stack vertically, centre-align */
+      .how-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        text-align: center;
+      }
+      .how-header__right { align-items: center; max-width: 720px; }
+      .how-headline { font-size: 48px; }
+
+      /* Cards: full width, side-by-side row (text | image or image | text) */
+      .how-cards { flex-direction: column; gap: 20px; }
+      .how-card {
+        flex-direction: row;
+        align-items: stretch;
+        min-height: 294px;
+      }
+      /* Tablet card 1: text left, image right */
+      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; }
+      .how-card--indigo .how-card__img { order: 1; flex: 1 1 0; align-self: stretch; }
+      .how-card--indigo .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
+      /* Tablet card 2: image left, text right */
+      .how-card--sand .how-card__img { order: 0; flex: 1 1 0; align-self: stretch; }
+      .how-card--sand .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
+      .how-card--sand .how-card__txt  { order: 1; flex: 1 1 0; }
+
+      .how-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
+    }
+
+    /* ── MOBILE ≤ 560px ── */
+    @media (max-width: 560px) {
+      .how-section { padding: 56px var(--page-px) 56px; }
+      .how-section__inner { gap: 40px; }
+
+      .how-header { gap: 16px; }
+      .how-headline { font-size: 36px; }
+
+      /* Cards: single column, text then image */
+      .how-card { flex-direction: column; }
+      .how-card--indigo .how-card__txt { order: 0; }
+      .how-card--indigo .how-card__img { order: 1; }
+      .how-card--sand   .how-card__txt { order: 0; }
+      .how-card--sand   .how-card__img { order: 1; }
+
+      .how-card__headline { font-size: 28px; }
+      .how-card__list { gap: 5px 10px; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -1079,6 +1298,113 @@
 
 
   <!-- ══════════════════════════════════════════════════════════
+       HOW OLYA WORKS
+  ══════════════════════════════════════════════════════════ -->
+  <section class="how-section">
+    <div class="how-section__inner">
+
+      <!-- Header: label left, headline+sub right -->
+      <div class="how-header">
+        <div class="section-label">
+          <img class="section-label__dot" src="assets/images/olya-dot-bulb.svg" alt="" aria-hidden="true" />
+          <span class="section-label__text" data-i18n="how-label">How Olya works</span>
+        </div>
+        <div class="how-header__right">
+          <h2 class="how-headline" data-i18n="how-headline">Define the identity.<br>Olya handles the rest.</h2>
+          <p class="how-sub" data-i18n="how-sub">Whether you&#8217;re running a single brand or managing 30 client accounts, Olya works the same way: you define the voice, the persona, and the language &#8212; and it generates content at scale across every platform you need.</p>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="how-cards">
+
+        <!-- Card 1: Build a persona -->
+        <article class="how-card how-card--indigo">
+          <div class="how-card__txt">
+            <div class="how-card__copy">
+              <h3 class="how-card__headline" data-i18n="how-card1-headline">Build a persona once.<br>Generate content forever.</h3>
+              <p class="how-card__body" data-i18n="how-card1-body">Define a persona&#8217;s face, voice, language, and niche. Olya generates photos, captions, scripts, and short-form videos at scale &#8212; in any European language, across Instagram, TikTok, and YouTube Shorts.</p>
+            </div>
+            <ul class="how-card__list" aria-label="Features">
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card1-f1">Personality &amp; voice</span>
+              </li>
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card1-f2">Multilingual</span>
+              </li>
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card1-f3">Per-persona analytics</span>
+              </li>
+            </ul>
+          </div>
+          <div class="how-card__img">
+            <img
+              src="assets/images/card-1-collage-desktop.png"
+              srcset="assets/images/card-1-collage-mobile.png 560w,
+                      assets/images/card-1-collage-tablet.png 900w,
+                      assets/images/card-1-collage-desktop.png 1200w"
+              sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 50vw"
+              alt="AI persona content examples"
+              loading="lazy"
+            />
+          </div>
+        </article>
+
+        <!-- Card 2: Brand guidelines -->
+        <article class="how-card how-card--sand">
+          <div class="how-card__img">
+            <img
+              src="assets/images/card-2-collage-desktop.png"
+              srcset="assets/images/card-2-collage-mobile.png 560w,
+                      assets/images/card-2-collage-tablet.png 900w,
+                      assets/images/card-2-collage-desktop.png 1200w"
+              sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 50vw"
+              alt="Brand content generation examples"
+              loading="lazy"
+            />
+          </div>
+          <div class="how-card__txt">
+            <div class="how-card__copy">
+              <h3 class="how-card__headline" data-i18n="how-card2-headline">Turn brand guidelines into a daily content machine.</h3>
+              <p class="how-card__body" data-i18n="how-card2-body">Feed Olya a brand&#8217;s tone of voice, visual identity, and product catalogue. It generates on-brand posts, reels, and captions &#8212; and publishes them across every channel, without the manual work.</p>
+            </div>
+            <ul class="how-card__list" aria-label="Features">
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card2-f1">Brand voice training</span>
+              </li>
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card2-f2">Product-aware content</span>
+              </li>
+              <li class="how-card__check">
+                <span class="how-card__check-icon" aria-hidden="true">
+                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                </span>
+                <span class="how-card__check-label" data-i18n="how-card2-f3">GDPR-compliant</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
        FORM SECTION — "Be first in line"
   ══════════════════════════════════════════════════════════ -->
   <section class="cta-section" id="early-access">
@@ -1192,6 +1518,19 @@
       'cookie-text': 'We use strictly necessary cookies to make our site work, and optional analytics cookies to understand how you use it. See our <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Privacy Policy</a> or contact <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
       'cookie-decline': 'Decline',
       'cookie-accept': 'Accept',
+      'how-label': 'How Olya works',
+      'how-headline': 'Define the identity.<br>Olya handles the rest.',
+      'how-sub': 'Whether you’re running a single brand or managing 30 client accounts, Olya works the same way: you define the voice, the persona, and the language — and it generates content at scale across every platform you need.',
+      'how-card1-headline': 'Build a persona once.<br>Generate content forever.',
+      'how-card1-body': 'Define a persona’s face, voice, language, and niche. Olya generates photos, captions, scripts, and short-form videos at scale — in any European language, across Instagram, TikTok, and YouTube Shorts.',
+      'how-card1-f1': 'Personality &amp; voice',
+      'how-card1-f2': 'Multilingual',
+      'how-card1-f3': 'Per-persona analytics',
+      'how-card2-headline': 'Turn brand guidelines into a daily content machine.',
+      'how-card2-body': 'Feed Olya a brand’s tone of voice, visual identity, and product catalogue. It generates on-brand posts, reels, and captions — and publishes them across every channel, without the manual work.',
+      'how-card2-f1': 'Brand voice training',
+      'how-card2-f2': 'Product-aware content',
+      'how-card2-f3': 'GDPR-compliant',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -1216,6 +1555,19 @@
       'cookie-text': 'Nous utilisons des cookies strictement nécessaires au fonctionnement du site, ainsi que des cookies analytiques optionnels. Consultez notre <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Politique de confidentialité</a> ou contactez <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
       'cookie-decline': 'Refuser',
       'cookie-accept': 'Accepter',
+      'how-label': 'Comment Olya fonctionne',
+      'how-headline': 'Définissez l’identité.<br>Olya s’occupe du reste.',
+      'how-sub': 'Que vous gériez une seule marque ou 30 comptes clients, Olya fonctionne de la même façon : vous définissez la voix, la persona et la langue — et elle génère du contenu à grande échelle.',
+      'how-card1-headline': 'Créez une persona une fois.<br>Générez du contenu indéfiniment.',
+      'how-card1-body': 'Définissez le visage, la voix, la langue et la niche d’une persona. Olya génère photos, légendes, scripts et vidéos courtes à grande échelle.',
+      'how-card1-f1': 'Personnalité &amp; voix',
+      'how-card1-f2': 'Multilingue',
+      'how-card1-f3': 'Analytiques par persona',
+      'how-card2-headline': 'Transformez les directives de marque en machine à contenu quotidien.',
+      'how-card2-body': 'Donnez à Olya le ton de voix, l’identité visuelle et le catalogue produit d’une marque. Elle génère des posts, reels et légendes conformes à la marque.',
+      'how-card2-f1': 'Formation à la voix de marque',
+      'how-card2-f2': 'Contenu produit-aware',
+      'how-card2-f3': 'Conforme RGPD',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -1240,6 +1592,19 @@
       'cookie-text': 'Wir verwenden unbedingt erforderliche Cookies sowie optionale Analyse-Cookies. Weitere Infos in unserer <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Datenschutzrichtlinie</a> oder wenden Sie sich an <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
       'cookie-decline': 'Ablehnen',
       'cookie-accept': 'Akzeptieren',
+      'how-label': 'Wie Olya funktioniert',
+      'how-headline': 'Definieren Sie die Identität.<br>Olya erledigt den Rest.',
+      'how-sub': 'Ob Sie eine einzelne Marke oder 30 Kundenkonten verwalten — Olya funktioniert immer gleich: Sie definieren die Stimme, die Persona und die Sprache.',
+      'how-card1-headline': 'Erstellen Sie eine Persona einmal.<br>Generieren Sie Inhalte für immer.',
+      'how-card1-body': 'Definieren Sie das Gesicht, die Stimme, die Sprache und die Nische einer Persona. Olya generiert Fotos, Beschriftungen, Skripte und Kurzvideos in großem Maßstab.',
+      'how-card1-f1': 'Persönlichkeit &amp; Stimme',
+      'how-card1-f2': 'Mehrsprachig',
+      'how-card1-f3': 'Persona-Analytik',
+      'how-card2-headline': 'Verwandeln Sie Markenrichtlinien in eine tägliche Content-Maschine.',
+      'how-card2-body': 'Geben Sie Olya den Ton, die visuelle Identität und den Produktkatalog einer Marke. Sie generiert markenkonforme Posts, Reels und Bildunterschriften.',
+      'how-card2-f1': 'Markenstimmen-Training',
+      'how-card2-f2': 'Produktbewusster Inhalt',
+      'how-card2-f3': 'DSGVO-konform',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -1264,6 +1629,19 @@
       'cookie-text': 'Utilizziamo cookie strettamente necessari e, facoltativamente, cookie analitici. Consulta la nostra <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Informativa sulla privacy</a> o contatta <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
       'cookie-decline': 'Rifiuta',
       'cookie-accept': 'Accetta',
+      'how-label': 'Come funziona Olya',
+      'how-headline': 'Definisci l’identità.<br>Olya pensa al resto.',
+      'how-sub': 'Che tu gestisca un singolo brand o 30 account clienti, Olya funziona sempre allo stesso modo: definisci la voce, la persona e la lingua — e lei genera contenuti su scala.',
+      'how-card1-headline': 'Crea una persona una volta.<br>Genera contenuti per sempre.',
+      'how-card1-body': 'Definisci il volto, la voce, la lingua e la nicchia di una persona. Olya genera foto, didascalie, script e video brevi su scala, in qualsiasi lingua europea.',
+      'how-card1-f1': 'Personalità &amp; voce',
+      'how-card1-f2': 'Multilingue',
+      'how-card1-f3': 'Analisi per persona',
+      'how-card2-headline': 'Trasforma le linee guida del brand in una macchina di contenuti quotidiani.',
+      'how-card2-body': 'Dai a Olya il tono di voce, l’identità visiva e il catalogo prodotti di un brand. Genera post, reel e didascalie in linea con il brand.',
+      'how-card2-f1': 'Training della voce del brand',
+      'how-card2-f2': 'Contenuto product-aware',
+      'how-card2-f3': 'Conforme al GDPR',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -1288,6 +1666,19 @@
       'cookie-text': 'Usamos cookies estrictamente necesarias y, opcionalmente, cookies analíticas. Consulta nuestra <a href="assets/docs/privacy.pdf" target="_blank" rel="noopener">Política de privacidad</a> o contacta con <a href="mailto:legal@olya.tech">legal@olya.tech</a>.',
       'cookie-decline': 'Rechazar',
       'cookie-accept': 'Aceptar',
+      'how-label': 'Cómo funciona Olya',
+      'how-headline': 'Define la identidad.<br>Olya se encarga del resto.',
+      'how-sub': 'Tanto si gestionas una sola marca como 30 cuentas de clientes, Olya funciona igual: tú defines la voz, la persona y el idioma — y ella genera contenido a escala.',
+      'how-card1-headline': 'Crea una persona una vez.<br>Genera contenido para siempre.',
+      'how-card1-body': 'Define el rostro, la voz, el idioma y el nicho de una persona. Olya genera fotos, pies de foto, guiones y vídeos cortos a escala, en cualquier idioma europeo.',
+      'how-card1-f1': 'Personalidad &amp; voz',
+      'how-card1-f2': 'Multilingüe',
+      'how-card1-f3': 'Análisis por persona',
+      'how-card2-headline': 'Convierte las directrices de marca en una máquina de contenido diario.',
+      'how-card2-body': 'Dale a Olya el tono de voz, la identidad visual y el catálogo de productos de una marca. Genera publicaciones, reels y pies de foto alineados con la marca.',
+      'how-card2-f1': 'Entrenamiento de voz de marca',
+      'how-card2-f2': 'Contenido product-aware',
+      'how-card2-f3': 'Conforme con el RGPD',
     },
   };
   (function () {
