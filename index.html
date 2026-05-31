@@ -1619,13 +1619,18 @@
       color: var(--color-text-primary);
     }
 
+    /* Between max-width and tablet: items span full section width */
+    @media (max-width: 1200px) {
+      .challenge-items { width: 100%; margin-left: 0; }
+    }
+
     /* ── TABLET ≤ 900px ── */
     @media (max-width: 900px) {
       .challenge-section { padding: 64px var(--page-px); }
       .europe-map { top: calc(50% + 0.19px - 100px); }
       .challenge-section__inner { gap: 48px; align-items: stretch; }
-      .challenge-header { flex-direction: column; gap: 20px; }
-      .challenge-headline { font-size: 48px; max-width: 100%; }
+      .challenge-header { flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+      .challenge-headline { font-size: 48px; width: 100%; margin-left: 0; }
       .challenge-items { width: 100%; margin-left: 0; }
     }
 
@@ -1634,7 +1639,7 @@
       .challenge-section { padding: 56px var(--page-px); }
       .europe-map { top: calc(50% + 0.19px - 100px); }
       .challenge-section__inner { gap: 40px; }
-      .challenge-headline { font-size: 36px; }
+      .challenge-headline { font-size: 36px; width: 100%; margin-left: 0; }
       .challenge-item { min-width: 100%; padding-right: 0; }
       .challenge-item:last-child { padding-right: 0; }
     }
