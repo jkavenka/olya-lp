@@ -1022,7 +1022,7 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
-      overflow: hidden; /* clip collage images that overflow */
+      /* overflow: visible so collage images spill beyond card edges */
     }
     .how-card--indigo { background: #ebf0ff; }
     .how-card--sand   { background: #fffaeb; }
@@ -1070,8 +1070,11 @@
       width: 14px;
       height: 14px;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .how-card__check-icon img { width: 100%; height: 100%; display: block; }
+    .how-card__check-icon img { width: 14px; height: 14px; display: block; }
     .how-card__check-label {
       font-family: 'Chivo Mono', monospace;
       font-weight: 300;
@@ -1082,11 +1085,24 @@
       white-space: nowrap;
     }
 
-    /* Card image area */
+    /* Card image area — overflows card boundaries to match Figma */
     .how-card__img {
-      border-radius: 22px;
-      overflow: hidden;
       flex-shrink: 0;
+      position: relative;
+      /* Desktop card 1 (indigo): collage left:-30px, right:-27px, bottom:-47px from image frame */
+      /* Image frame is inside 20px card padding */
+    }
+    .how-card--indigo .how-card__img {
+      margin-left: -30px;
+      margin-right: -27px;
+      margin-bottom: -47px;
+    }
+    /* Desktop card 2 (sand): image top, similar overflow.
+       From Figma card 2 image node: top overflow ~43px, left ~29px, right ~23px */
+    .how-card--sand .how-card__img {
+      margin-left: -29px;
+      margin-right: -23px;
+      margin-top: -43px;
     }
     .how-card__img img {
       display: block;
@@ -1124,10 +1140,16 @@
       }
       /* Tablet card 1: text left, image right */
       .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; }
-      .how-card--indigo .how-card__img { order: 1; flex: 1 1 0; align-self: stretch; }
+      .how-card--indigo .how-card__img {
+        order: 1; flex: 1 1 0; align-self: stretch;
+        margin-left: 0; margin-right: -20px; margin-bottom: -20px; margin-top: 0;
+      }
       .how-card--indigo .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
       /* Tablet card 2: image left, text right */
-      .how-card--sand .how-card__img { order: 0; flex: 1 1 0; align-self: stretch; }
+      .how-card--sand .how-card__img {
+        order: 0; flex: 1 1 0; align-self: stretch;
+        margin-left: -20px; margin-right: 0; margin-top: -20px; margin-bottom: 0;
+      }
       .how-card--sand .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
       .how-card--sand .how-card__txt  { order: 1; flex: 1 1 0; }
 
@@ -1145,9 +1167,15 @@
       /* Cards: single column, text then image */
       .how-card { flex-direction: column; }
       .how-card--indigo .how-card__txt { order: 0; }
-      .how-card--indigo .how-card__img { order: 1; }
-      .how-card--sand   .how-card__txt { order: 0; }
-      .how-card--sand   .how-card__img { order: 1; }
+      .how-card--indigo .how-card__img {
+        order: 1;
+        margin-left: -16px; margin-right: -16px; margin-bottom: -16px; margin-top: 0;
+      }
+      .how-card--sand .how-card__txt { order: 0; }
+      .how-card--sand .how-card__img {
+        order: 1;
+        margin-left: -16px; margin-right: -16px; margin-bottom: -16px; margin-top: 0;
+      }
 
       .how-card__headline { font-size: 28px; }
       .how-card__list { gap: 5px 10px; }
@@ -1328,19 +1356,19 @@
             <ul class="how-card__list" aria-label="Features">
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card1-f1">Personality &amp; voice</span>
               </li>
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card1-f2">Multilingual</span>
               </li>
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card1-f3">Per-persona analytics</span>
               </li>
@@ -1380,19 +1408,19 @@
             <ul class="how-card__list" aria-label="Features">
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card2-f1">Brand voice training</span>
               </li>
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card2-f2">Product-aware content</span>
               </li>
               <li class="how-card__check">
                 <span class="how-card__check-icon" aria-hidden="true">
-                  <img src="assets/images/olya-dot-bulb.svg" alt="" />
+                  <img src="assets/images/check-icon.svg" alt="" />
                 </span>
                 <span class="how-card__check-label" data-i18n="how-card2-f3">GDPR-compliant</span>
               </li>
