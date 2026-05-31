@@ -1136,7 +1136,7 @@
       .how-card { flex-direction: row; align-items: flex-start; }
 
       /* Card 1: text left, image top-right; overflow right/top/bottom */
-      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; min-width: 0; }
+      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; min-width: 0; padding-right: 20px; }
       .how-card--indigo .how-card__img {
         order: 1;
         flex: 0 0 auto;
@@ -1154,7 +1154,7 @@
         margin-top: -20px;
         margin-bottom: -20px;
       }
-      .how-card--sand .how-card__txt { order: 1; flex: 1 1 0; min-width: 0; }
+      .how-card--sand .how-card__txt { order: 1; flex: 1 1 0; min-width: 0; padding-left: 20px; }
 
       /* Tablet images: fill width, natural height */
       .how-card__img picture,
@@ -1178,22 +1178,21 @@
         order: 1;
         flex: none;
         width: auto;
-        /* overflow card edges left/right/bottom, not top */
-        margin-left: -16px;
-        margin-right: -16px;
-        margin-bottom: -16px;
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-bottom: -20px;
         margin-top: 0;
       }
-      .how-card--sand .how-card__txt { order: 0; flex: none; }
       .how-card--sand .how-card__img {
-        order: 1;
+        order: 0;
         flex: none;
         width: auto;
         margin-left: -16px;
         margin-right: -16px;
-        margin-bottom: -16px;
-        margin-top: 0;
+        margin-bottom: 0;
+        margin-top: -16px;
       }
+      .how-card--sand .how-card__txt { order: 1; flex: none; }
 
       /* Mobile images: natural width and height, no cropping */
       .how-card__img picture,
