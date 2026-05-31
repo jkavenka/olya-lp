@@ -1202,6 +1202,238 @@
       .how-card__list { gap: 5px 10px; }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       BENEFITS / WHY OLYA
+    ══════════════════════════════════════════════════════════════ */
+    .benefits-section {
+      position: relative;
+      border-top: 0.5px solid var(--color-border-default);
+      padding: 80px var(--page-px) 80px;
+      /* overflow:hidden clips flower/phone vertically without causing h-scroll.
+         Both elements are position:absolute so they don't expand document width. */
+      overflow: hidden;
+    }
+
+    .benefits-section__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+
+    /* ── Flower decoration ── */
+    /* position:absolute + large negative left = bleeds off left edge.
+       overflow:hidden on section clips it vertically.
+       No horizontal scroll because absolute elements don't expand scroll width
+       when the containing block (section) has overflow:hidden. */
+    .benefits-flower {
+      position: absolute;
+      width: 401px;
+      height: 401px;
+      top: 231px;
+      left: -112px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .benefits-flower img { display: block; width: 100%; height: 100%; }
+
+    /* ── iPhone ── */
+    .benefits-iphone {
+      position: absolute;
+      width: 215px;
+      height: 414px;
+      top: 223px;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .benefits-iphone img { display: block; width: 100%; height: 100%; }
+
+    /* ── Section header ── */
+    .benefits-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .benefits-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+      max-width: 895px;
+    }
+
+    /* ── Benefits list ── */
+    .benefits-list {
+      position: relative;
+      z-index: 2;
+      /* Indent right to clear the iPhone (215px) + gap */
+      padding-left: 255px;
+      display: flex;
+      gap: 48px;
+    }
+    .benefits-col {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Individual list item ── */
+    .benefits-item {
+      position: relative;
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+    /* blob behind number */
+    .benefits-item__blob {
+      position: absolute;
+      width: 42px;
+      height: 41px;
+      left: -10px;
+      top: 12px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .benefits-item__blob img { display: block; width: 100%; height: 100%; }
+
+    .benefits-item__num {
+      position: relative;
+      z-index: 1;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1;
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--color-indigo-strong);
+      width: 30px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .benefits-item__body {
+      position: relative;
+      z-index: 1;
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .benefits-item__title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1;
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+    }
+    .benefits-item__desc {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    /* Desktop-only elements (flower + iPhone as absolute overlays) */
+    .benefits-flower--desktop { display: block; }
+    /* Phone block only shown on tablet/mobile */
+    .benefits-phone-block { display: none; }
+
+    /* ── TABLET ≤ 900px ── */
+    @media (max-width: 900px) {
+      .benefits-section { padding: 64px var(--page-px) 64px; }
+      .benefits-section__inner { gap: 56px; }
+
+      /* Header stacks vertically */
+      .benefits-header { flex-direction: column; gap: 24px; }
+      .benefits-headline { font-size: 48px; max-width: 100%; }
+
+      /* Flower: centred at top, 496×496px */
+      .benefits-flower {
+        width: 496px; height: 496px;
+        top: 0; left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* iPhone: 215×414, left:140px, top:40px inside the phone block.
+         The phone block sits as a normal flex child above the list. */
+      .benefits-iphone {
+        position: relative;
+        width: 215px; height: 414px;
+        top: auto; left: auto;
+        margin: 0 auto;
+      }
+
+      /* Hide desktop absolute overlays, show phone block */
+      .benefits-flower--desktop { display: none; }
+      .benefits-iphone--desktop { display: none; }
+      .benefits-phone-block { display: block; }
+
+      /* Phone block — flower + iPhone stacked, shown above list */
+      .benefits-phone-block {
+        position: relative;
+        width: 100%;
+        height: 455px; /* 496px flower - some overlap */
+        display: block;
+      }
+      .benefits-phone-block .benefits-flower {
+        top: 0; left: 50%; transform: translateX(-50%);
+      }
+      .benefits-phone-block .benefits-iphone {
+        position: absolute;
+        left: 50%;
+        transform: translateX(calc(-50% + 28px)); /* offset: 140.5 - 496/2 = -107.5 → centre+28 */
+        top: 40px;
+        margin: 0;
+      }
+
+      /* List: single column, no left indent */
+      .benefits-list {
+        padding-left: 0;
+        flex-direction: column;
+        gap: 0;
+      }
+      .benefits-col { flex: none; }
+    }
+
+    /* ── MOBILE ≤ 560px ── */
+    @media (max-width: 560px) {
+      .benefits-section { padding: 56px var(--page-px) 56px; }
+      .benefits-section__inner { gap: 40px; }
+      .benefits-headline { font-size: 36px; }
+
+      /* Flower: 400×400px centred at bottom of phone block */
+      .benefits-phone-block {
+        height: 400px;
+      }
+      .benefits-phone-block .benefits-flower {
+        width: 400px; height: 400px;
+        top: auto; bottom: 0;
+        left: 50%; transform: translateX(-50%);
+      }
+      /* iPhone: 173×333px, centred */
+      .benefits-phone-block .benefits-iphone {
+        width: 173px; height: 333px;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -1444,6 +1676,103 @@
       </div>
     </div>
   </section>
+  <!-- ══════════════════════════════════════════════════════════
+       BENEFITS — WHY OLYA
+  ══════════════════════════════════════════════════════════ -->
+  <section class="benefits-section">
+
+    <!-- Flower — desktop: absolute left-bleed; tablet/mobile: inside phone block -->
+    <div class="benefits-flower benefits-flower--desktop" aria-hidden="true">
+      <img src="assets/images/flower.webp" alt="" loading="lazy" />
+    </div>
+
+    <!-- iPhone — desktop: absolute left column -->
+    <div class="benefits-iphone benefits-iphone--desktop" aria-hidden="true">
+      <img src="assets/images/iPhone.webp" alt="Olya app on iPhone" loading="lazy" />
+    </div>
+
+    <div class="benefits-section__inner">
+
+      <!-- Header -->
+      <div class="benefits-header">
+        <div class="section-label">
+          <img class="section-label__dot" src="assets/images/olya-dot-birds.svg" alt="" aria-hidden="true" />
+          <span class="section-label__text" data-i18n="benefits-label">Why Olya</span>
+        </div>
+        <h2 class="benefits-headline" data-i18n="benefits-headline">The only full-stack AI content OS built for European teams.</h2>
+      </div>
+
+      <!-- Tablet/mobile: phone block (flower + iPhone) inline -->
+      <div class="benefits-phone-block" aria-hidden="true">
+        <div class="benefits-flower" aria-hidden="true">
+          <img src="assets/images/flower.webp" alt="" loading="lazy" />
+        </div>
+        <div class="benefits-iphone" aria-hidden="true">
+          <img src="assets/images/iPhone.webp" alt="" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Benefits list -->
+      <div class="benefits-list">
+        <!-- Column 1 -->
+        <div class="benefits-col">
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">01</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b1-title">Multilingual by default</p>
+              <p class="benefits-item__desc" data-i18n="b1-desc">Not translated — natively generated. French, German, Spanish, Italian, English, and more. Your content sounds local because it is.</p>
+            </div>
+          </div>
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">02</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b2-title">GDPR-aware from day one</p>
+              <p class="benefits-item__desc" data-i18n="b2-desc">Data stays in Europe. Privacy and compliance aren&#8217;t features &#8212; they&#8217;re the foundation everything else is built on.</p>
+            </div>
+          </div>
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">03</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b3-title">End-to-end workflow</p>
+              <p class="benefits-item__desc" data-i18n="b3-desc">Persona creation &#8594; content generation &#8594; scheduling &#8594; analytics. No more tool-switching. No more gaps.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div class="benefits-col">
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">04</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b4-title">White-label for agencies</p>
+              <p class="benefits-item__desc" data-i18n="b4-desc">Deploy Olya under your own brand. Give each client their own workspace, personas, and analytics dashboard.</p>
+            </div>
+          </div>
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">05</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b5-title">Multi-tenant workspace</p>
+              <p class="benefits-item__desc" data-i18n="b5-desc">Manage unlimited client brands and personas from a single agency account, with role-based access control.</p>
+            </div>
+          </div>
+          <div class="benefits-item">
+            <div class="benefits-item__blob" aria-hidden="true"><img src="assets/images/blob-1.webp" alt="" /></div>
+            <span class="benefits-item__num">06</span>
+            <div class="benefits-item__body">
+              <p class="benefits-item__title" data-i18n="b6-title">Built for the platforms that matter</p>
+              <p class="benefits-item__desc" data-i18n="b6-desc">Instagram, TikTok, LinkedIn, and YouTube Shorts &#8212; with format-specific generation and scheduling built in.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ══════════════════════════════════════════════════════════
        FORM SECTION — "Be first in line"
@@ -1572,6 +1901,20 @@
       'how-card2-f1': 'Brand voice training',
       'how-card2-f2': 'Product-aware content',
       'how-card2-f3': 'GDPR-compliant',
+      'benefits-label': 'Why Olya',
+      'benefits-headline': 'The only full-stack AI content OS built for European teams.',
+      'b1-title': 'Multilingual by default',
+      'b1-desc': 'Not translated — natively generated. French, German, Spanish, Italian, English, and more. Your content sounds local because it is.',
+      'b2-title': 'GDPR-aware from day one',
+      'b2-desc': 'Data stays in Europe. Privacy and compliance aren’t features — they’re the foundation everything else is built on.',
+      'b3-title': 'End-to-end workflow',
+      'b3-desc': 'Persona creation → content generation → scheduling → analytics. No more tool-switching. No more gaps.',
+      'b4-title': 'White-label for agencies',
+      'b4-desc': 'Deploy Olya under your own brand. Give each client their own workspace, personas, and analytics dashboard.',
+      'b5-title': 'Multi-tenant workspace',
+      'b5-desc': 'Manage unlimited client brands and personas from a single agency account, with role-based access control.',
+      'b6-title': 'Built for the platforms that matter',
+      'b6-desc': 'Instagram, TikTok, LinkedIn, and YouTube Shorts — with format-specific generation and scheduling built in.',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -1609,6 +1952,20 @@
       'how-card2-f1': 'Formation à la voix de marque',
       'how-card2-f2': 'Contenu produit-aware',
       'how-card2-f3': 'Conforme RGPD',
+      'benefits-label': 'Pourquoi Olya',
+      'benefits-headline': 'Le seul OS de contenu IA full-stack conçu pour les équipes européennes.',
+      'b1-title': 'Multilingue par défaut',
+      'b1-desc': 'Pas traduit — généré nativement. Français, allemand, espagnol, italien, anglais et plus encore.',
+      'b2-title': 'Conforme au RGPD dès le départ',
+      'b2-desc': 'Les données restent en Europe. La confidentialité et la conformité ne sont pas des fonctionnalités — c’est la fondation.',
+      'b3-title': 'Workflow de bout en bout',
+      'b3-desc': 'Création de persona → génération → planification → analytiques. Fini les changements d’outils.',
+      'b4-title': 'Marque blanche pour agences',
+      'b4-desc': 'Déployez Olya sous votre propre marque. Donnez à chaque client son propre espace.',
+      'b5-title': 'Espace multi-tenant',
+      'b5-desc': 'Gérez des marques et personas illimités depuis un seul compte agence, avec contrôle d’accès par rôle.',
+      'b6-title': 'Conçu pour les plateformes qui comptent',
+      'b6-desc': 'Instagram, TikTok, LinkedIn et YouTube Shorts — avec génération et planification spécifiques.',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -1646,6 +2003,20 @@
       'how-card2-f1': 'Markenstimmen-Training',
       'how-card2-f2': 'Produktbewusster Inhalt',
       'how-card2-f3': 'DSGVO-konform',
+      'benefits-label': 'Warum Olya',
+      'benefits-headline': 'Das einzige Full-Stack-KI-Content-OS für europäische Teams.',
+      'b1-title': 'Standardmäßig mehrsprachig',
+      'b1-desc': 'Nicht übersetzt — nativ generiert. Französisch, Deutsch, Spanisch, Italienisch, Englisch und mehr.',
+      'b2-title': 'Von Anfang an DSGVO-konform',
+      'b2-desc': 'Daten bleiben in Europa. Datenschutz und Compliance sind keine Features — sie sind das Fundament.',
+      'b3-title': 'Durchgängiger Workflow',
+      'b3-desc': 'Persona-Erstellung → Content-Generierung → Planung → Analytik. Kein Tool-Wechsel mehr.',
+      'b4-title': 'White-Label für Agenturen',
+      'b4-desc': 'Setzen Sie Olya unter Ihrer eigenen Marke ein. Geben Sie jedem Kunden seinen eigenen Arbeitsbereich.',
+      'b5-title': 'Multi-Tenant-Workspace',
+      'b5-desc': 'Verwalten Sie unbegrenzte Kundenmarken von einem einzigen Agenturkonto mit rollenbasierter Zugriffskontrolle.',
+      'b6-title': 'Für die wichtigen Plattformen gebaut',
+      'b6-desc': 'Instagram, TikTok, LinkedIn und YouTube Shorts — mit plattformspezifischer Generierung und Planung.',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -1683,6 +2054,20 @@
       'how-card2-f1': 'Training della voce del brand',
       'how-card2-f2': 'Contenuto product-aware',
       'how-card2-f3': 'Conforme al GDPR',
+      'benefits-label': 'Perché Olya',
+      'benefits-headline': 'L’unico AI content OS full-stack costruito per i team europei.',
+      'b1-title': 'Multilingue per impostazione predefinita',
+      'b1-desc': 'Non tradotto — generato nativamente. Francese, tedesco, spagnolo, italiano, inglese e altro.',
+      'b2-title': 'Conforme al GDPR fin dal primo giorno',
+      'b2-desc': 'I dati rimangono in Europa. Privacy e conformità non sono funzionalità — sono le fondamenta.',
+      'b3-title': 'Flusso di lavoro end-to-end',
+      'b3-desc': 'Creazione persona → generazione contenuti → pianificazione → analisi. Niente più cambi di strumento.',
+      'b4-title': 'White-label per agenzie',
+      'b4-desc': 'Distribuisci Olya con il tuo brand. Dai a ogni cliente il proprio spazio di lavoro.',
+      'b5-title': 'Workspace multi-tenant',
+      'b5-desc': 'Gestisci brand e personas illimitati da un unico account agenzia con controllo degli accessi basato sui ruoli.',
+      'b6-title': 'Costruito per le piattaforme che contano',
+      'b6-desc': 'Instagram, TikTok, LinkedIn e YouTube Shorts — con generazione e pianificazione specifiche per formato.',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -1720,6 +2105,20 @@
       'how-card2-f1': 'Entrenamiento de voz de marca',
       'how-card2-f2': 'Contenido product-aware',
       'how-card2-f3': 'Conforme con el RGPD',
+      'benefits-label': 'Por qué Olya',
+      'benefits-headline': 'El único OS de contenido IA full-stack construido para equipos europeos.',
+      'b1-title': 'Multilingüe por defecto',
+      'b1-desc': 'No traducido — generado nativamente. Francés, alemán, español, italiano, inglés y más.',
+      'b2-title': 'Compatible con el RGPD desde el primer día',
+      'b2-desc': 'Los datos permanecen en Europa. La privacidad y el cumplimiento no son funciones — son los cimientos.',
+      'b3-title': 'Flujo de trabajo de extremo a extremo',
+      'b3-desc': 'Creación de persona → generación → programación → análisis. Sin más cambios de herramienta.',
+      'b4-title': 'Marca blanca para agencias',
+      'b4-desc': 'Implementa Olya con tu propia marca. Dale a cada cliente su propio espacio de trabajo.',
+      'b5-title': 'Espacio de trabajo multi-tenant',
+      'b5-desc': 'Gestiona marcas y personas ilimitadas desde una sola cuenta de agencia con control de acceso basado en roles.',
+      'b6-title': 'Construido para las plataformas que importan',
+      'b6-desc': 'Instagram, TikTok, LinkedIn y YouTube Shorts — con generación y programación específicas por formato.',
     },
   };
   (function () {
