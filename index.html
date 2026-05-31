@@ -11,6 +11,7 @@
     /* ─── DESIGN TOKENS ──────────────────────────────────────────── */
     :root {
       --color-text-primary:   #120b39;
+      --color-indigo-strong:  #7f79e0;
       --color-text-muted:     #8b8996;
       --color-surface-subtle: #f7f7f8;
       --color-border-default: #e7e6eb;
@@ -1280,19 +1281,27 @@
     }
     .benefits-iphone img { display: block; width: 100%; height: 100%; }
 
-    /* ── List columns ── */
+    /* ── List columns: CSS Grid for equal-height paired rows ──
+       display:contents on .benefits-col dissolves it so .benefits-item
+       become direct grid children. Explicit grid-area keeps 01/04,
+       02/05, 03/06 in the same row → rows size to tallest item. */
     .benefits-cols {
       flex: 1 1 0;
       min-width: 0;
-      display: flex;
-      gap: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 48px;
+      align-items: start;
     }
-    .benefits-col {
-      flex: 1 1 0;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-    }
+    .benefits-col { display: contents; }
+
+    /* Explicit placement: col 1 items → column 1, col 2 items → column 2 */
+    .benefits-col:first-child .benefits-item:nth-child(1) { grid-area: 1 / 1; }
+    .benefits-col:first-child .benefits-item:nth-child(2) { grid-area: 2 / 1; }
+    .benefits-col:first-child .benefits-item:nth-child(3) { grid-area: 3 / 1; }
+    .benefits-col:last-child  .benefits-item:nth-child(1) { grid-area: 1 / 2; }
+    .benefits-col:last-child  .benefits-item:nth-child(2) { grid-area: 2 / 2; }
+    .benefits-col:last-child  .benefits-item:nth-child(3) { grid-area: 3 / 2; }
 
     /* ── Individual list item ── */
     .benefits-item {
@@ -1383,10 +1392,16 @@
         order: 2;
       }
 
-      /* Fix 3: list goes first (order:1 < order:2) */
+      /* List goes first (order:1); phone-block order:2 goes below */
       .benefits-content { flex-direction: column; gap: 40px; }
-      .benefits-cols { flex-direction: column; gap: 0; order: 1; }
-      .benefits-col { flex: none; }
+      /* Tablet: keep 2 columns, tighter number-text gap (20px vs 30px desktop) */
+      .benefits-cols {
+        order: 1;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 48px;
+      }
+      .benefits-col { display: contents; }
+      .benefits-item { gap: 20px; }
 
       /* Tablet phone-block internals: flower centred 496px, iPhone offset per Figma */
       .benefits-phone-block .benefits-flower {
@@ -1411,6 +1426,22 @@
 
       /* Fix 4: header centre-aligned on mobile */
       .benefits-headline { font-size: 36px; }
+
+      /* Mobile: single column list */
+      .benefits-cols {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+      }
+      /* Reset all items to auto placement in single column */
+      .benefits-col:first-child .benefits-item:nth-child(1),
+      .benefits-col:first-child .benefits-item:nth-child(2),
+      .benefits-col:first-child .benefits-item:nth-child(3),
+      .benefits-col:last-child  .benefits-item:nth-child(1),
+      .benefits-col:last-child  .benefits-item:nth-child(2),
+      .benefits-col:last-child  .benefits-item:nth-child(3) {
+        grid-area: auto;
+        grid-column: 1;
+      }
 
       /* Phone-block: flower 400px at bottom, iPhone 173×333 centred */
       .benefits-phone-block { height: 400px; }
