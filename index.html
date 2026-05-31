@@ -1131,62 +1131,71 @@
       .how-header__right { align-items: center; max-width: 720px; }
       .how-headline { font-size: 48px; }
 
-      /* Cards: full width, side-by-side row (text | image or image | text) */
+      /* Tablet 700–900px: side-by-side row, no min-height, cards size to content */
       .how-cards { flex-direction: column; gap: 20px; }
-      .how-card {
-        flex-direction: row;
-        align-items: stretch;
-        min-height: 294px;
-      }
-      /* Tablet: card 1 = text left / image top-right, card 2 = image top-left / text right.
-         No negative margins — card height adapts to text. Image fills its flex half. */
-      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; min-width: 0; align-self: flex-start; }
+      .how-card { flex-direction: row; align-items: flex-start; }
+
+      /* Card 1: text left, image top-right; overflow right/top/bottom */
+      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; min-width: 0; }
       .how-card--indigo .how-card__img {
         order: 1;
-        flex: 1 1 0;
-        min-width: 0;
-        align-self: flex-start; /* image stays at top of its column, doesn't stretch */
-        margin: 0; /* no overflow on tablet */
+        flex: 0 0 auto;
+        width: 50%;
+        margin-right: -20px;
+        margin-top: -20px;
+        margin-bottom: -20px;
       }
-      .how-card--indigo .how-card__img picture,
-      .how-card--indigo .how-card__img img { display: block; width: 100%; height: auto; object-fit: contain; }
-      /* Card 2: image top-left, text right */
+      /* Card 2: image top-left, text right; overflow left/top/bottom */
       .how-card--sand .how-card__img {
         order: 0;
-        flex: 1 1 0;
-        min-width: 0;
-        align-self: flex-start;
-        margin: 0;
+        flex: 0 0 auto;
+        width: 50%;
+        margin-left: -20px;
+        margin-top: -20px;
+        margin-bottom: -20px;
       }
-      .how-card--sand .how-card__img picture,
-      .how-card--sand .how-card__img img { display: block; width: 100%; height: auto; object-fit: contain; }
-      .how-card--sand .how-card__txt { order: 1; flex: 1 1 0; min-width: 0; align-self: flex-start; }
+      .how-card--sand .how-card__txt { order: 1; flex: 1 1 0; min-width: 0; }
+
+      /* Tablet images: fill width, natural height */
+      .how-card__img picture,
+      .how-card__img img { display: block; width: 100%; height: auto; }
 
       .how-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
     }
 
-    /* ── MOBILE ≤ 560px ── */
-    @media (max-width: 560px) {
+    /* ── MOBILE ≤ 700px: single-column layout ── */
+    @media (max-width: 700px) {
       .how-section { padding: 56px var(--page-px) 56px; }
       .how-section__inner { gap: 40px; }
-
       .how-header { gap: 16px; }
       .how-headline { font-size: 36px; }
 
-      /* Cards: single column, text then image */
-      .how-card { flex-direction: column; }
-      /* Mobile: text then image, card height adapts to content */
-      .how-card--indigo .how-card__txt { order: 0; }
+      /* Stack vertically, text then image */
+      .how-card { flex-direction: column; align-items: stretch; }
+
+      .how-card--indigo .how-card__txt { order: 0; flex: none; }
       .how-card--indigo .how-card__img {
         order: 1;
-        margin: 0; /* no overflow on mobile — mobile images designed to fit */
+        flex: none;
+        width: auto;
+        /* overflow card edges left/right/bottom, not top */
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-bottom: -16px;
+        margin-top: 0;
       }
-      .how-card--sand .how-card__txt { order: 0; }
+      .how-card--sand .how-card__txt { order: 0; flex: none; }
       .how-card--sand .how-card__img {
         order: 1;
-        margin: 0;
+        flex: none;
+        width: auto;
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-bottom: -16px;
+        margin-top: 0;
       }
-      /* Mobile: images natural height */
+
+      /* Mobile images: natural width and height, no cropping */
       .how-card__img picture,
       .how-card__img img { display: block; width: 100%; height: auto; }
 
@@ -1389,7 +1398,7 @@
           </div>
           <div class="how-card__img">
             <picture>
-              <source media="(max-width: 560px)" srcset="assets/images/card-1-collage-mobile.png">
+              <source media="(max-width: 700px)" srcset="assets/images/card-1-collage-mobile.png">
               <source media="(max-width: 900px)" srcset="assets/images/card-1-collage-tablet.png">
               <img src="assets/images/card-1-collage-desktop.png" alt="AI persona content examples" loading="lazy">
             </picture>
@@ -1400,7 +1409,7 @@
         <article class="how-card how-card--sand">
           <div class="how-card__img">
             <picture>
-              <source media="(max-width: 560px)" srcset="assets/images/card-2-collage-mobile.png">
+              <source media="(max-width: 700px)" srcset="assets/images/card-2-collage-mobile.png">
               <source media="(max-width: 900px)" srcset="assets/images/card-2-collage-tablet.png">
               <img src="assets/images/card-2-collage-desktop.png" alt="Brand content generation examples" loading="lazy">
             </picture>
