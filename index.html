@@ -1463,6 +1463,22 @@
       white-space: nowrap; border: 0;
     }
   </style>
+  <!-- Google Analytics — loads only after cookie consent is accepted -->
+  <script>
+  function loadGA(id) {
+    var s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+    s.async = true;
+    document.head.appendChild(s);
+    s.onload = function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', id);
+    };
+  }
+  </script>
 </head>
 <body>
 
@@ -2347,6 +2363,9 @@
     var existing = localStorage.getItem(STORAGE_KEY);
     if (!existing) {
       bar.removeAttribute('hidden');
+    } else if (existing === 'accepted') {
+      // Consent already given in a previous session — load GA immediately
+      loadGA('G-FCV7DDWQLQ');
     }
 
     function saveConsent(value) {
@@ -2356,8 +2375,7 @@
 
     btnA.addEventListener('click', function () {
       saveConsent('accepted');
-      // TODO: initialise Google Analytics here once GA Measurement ID is set
-      // e.g. loadGA('G-XXXXXXXXXX');
+      loadGA('G-FCV7DDWQLQ');
     });
 
     btnD.addEventListener('click', function () {
