@@ -1138,20 +1138,33 @@
         align-items: stretch;
         min-height: 294px;
       }
-      /* Tablet card 1: text left, image right */
-      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; }
+      /* Tablet card 1: text left, image right — image fills its half, overflows outer edges only */
+      .how-card--indigo .how-card__txt { order: 0; flex: 1 1 0; min-width: 0; }
       .how-card--indigo .how-card__img {
-        order: 1; flex: 1 1 0; align-self: stretch;
-        margin-left: 0; margin-right: -20px; margin-bottom: -20px; margin-top: 0;
+        order: 1;
+        flex: 1 1 0;
+        min-width: 0;
+        align-self: stretch;
+        /* overflow card on right/top/bottom, not into the text area */
+        margin-left: 0;
+        margin-right: -20px;
+        margin-top: -20px;
+        margin-bottom: -20px;
       }
-      .how-card--indigo .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
+      .how-card--indigo .how-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
       /* Tablet card 2: image left, text right */
       .how-card--sand .how-card__img {
-        order: 0; flex: 1 1 0; align-self: stretch;
-        margin-left: -20px; margin-right: 0; margin-top: -20px; margin-bottom: 0;
+        order: 0;
+        flex: 1 1 0;
+        min-width: 0;
+        align-self: stretch;
+        margin-right: 0;
+        margin-left: -20px;
+        margin-top: -20px;
+        margin-bottom: -20px;
       }
-      .how-card--sand .how-card__img img { width: 100%; height: 100%; object-fit: cover; }
-      .how-card--sand .how-card__txt  { order: 1; flex: 1 1 0; }
+      .how-card--sand .how-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+      .how-card--sand .how-card__txt { order: 1; flex: 1 1 0; min-width: 0; }
 
       .how-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
     }
@@ -1169,12 +1182,27 @@
       .how-card--indigo .how-card__txt { order: 0; }
       .how-card--indigo .how-card__img {
         order: 1;
-        margin-left: -16px; margin-right: -16px; margin-bottom: -16px; margin-top: 0;
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-bottom: -16px;
+        margin-top: 0;
+        height: 280px; /* constrain height so image doesn't overflow into next card */
       }
       .how-card--sand .how-card__txt { order: 0; }
       .how-card--sand .how-card__img {
         order: 1;
-        margin-left: -16px; margin-right: -16px; margin-bottom: -16px; margin-top: 0;
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-bottom: -16px;
+        margin-top: 0;
+        height: 280px;
+      }
+      /* Mobile: images fill fixed height container */
+      .how-card__img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
       }
 
       .how-card__headline { font-size: 28px; }
