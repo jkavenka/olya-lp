@@ -1478,7 +1478,6 @@
       width: 100%;
       display: flex;
       align-items: flex-start;
-      justify-content: space-between;
       gap: 40px;
     }
     .challenge-headline {
@@ -1489,7 +1488,11 @@
       line-height: 0.9;
       letter-spacing: -0.03em;
       color: var(--color-text-primary);
-      max-width: 895px;
+      /* Fixed width so left edge is always 1200-895=305px from inner left,
+         matching challenge-items left edge (also margin-left:auto, width:895px) */
+      width: 895px;
+      flex-shrink: 0;
+      margin-left: auto;
     }
 
     /* ── Icons module — right-aligned, matches headline width ── */
@@ -1557,7 +1560,7 @@
       right: 19.5px;
       bottom: 7.51px;
       aspect-ratio: 91 / 43;
-      animation: hamsterBob 1.4s ease-in-out infinite alternate;
+      /* static — these are the wheel stand legs, not hamster legs */
     }
     .hamster-legs img { width: 100%; height: 100%; display: block; }
 
@@ -1820,15 +1823,16 @@
         <article class="challenge-item" aria-label="Challenge 1 of 3">
           <!-- 112×112 clipped icon — wheel spins, hamster bobs -->
           <div class="challenge-icon" aria-hidden="true">
-            <!-- wheel renders first (behind), body+legs on top -->
-            <div class="hamster-wheel">
-              <img src="assets/images/wheel.webp" alt="" />
-            </div>
+            <!-- body and legs render first (behind wheel) -->
             <div class="hamster-body">
               <img src="assets/images/hamster-body.webp" alt="" />
             </div>
             <div class="hamster-legs">
               <img src="assets/images/hamster-legs.webp" alt="" />
+            </div>
+            <!-- wheel renders last = in front, spinning -->
+            <div class="hamster-wheel">
+              <img src="assets/images/wheel.webp" alt="" />
             </div>
           </div>
           <div class="challenge-item__txt">
