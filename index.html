@@ -1471,7 +1471,6 @@
       display: flex;
       flex-direction: column;
       gap: 72px;
-      align-items: flex-end; /* items module right-aligns to headline width */
     }
 
     /* ── Header ── */
@@ -1496,6 +1495,7 @@
     /* ── Icons module — right-aligned, matches headline width ── */
     .challenge-items {
       width: 895px;
+      margin-left: auto; /* right-aligns to match headline left edge */
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -1588,8 +1588,7 @@
       position: absolute;
       width: 319.5px;
       height: 319.5px;
-      left: calc(50% + 0.69px - 159.75px);  /* centre offset */
-      top:  calc(50% + 0.19px - 159.75px);
+      /* desktop: no left/top — sits at natural 0,0 of container */
       pointer-events: none;
     }
     .europe-map img { width: 100%; height: 100%; display: block; }
@@ -1598,7 +1597,7 @@
     .challenge-item__txt {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 10px;
     }
     .challenge-item__title {
       font-family: 'Fraunces', serif;
@@ -1620,15 +1619,17 @@
     /* ── TABLET ≤ 900px ── */
     @media (max-width: 900px) {
       .challenge-section { padding: 64px var(--page-px); }
+      .europe-map { top: calc(50% + 0.19px - 100px); }
       .challenge-section__inner { gap: 48px; align-items: stretch; }
       .challenge-header { flex-direction: column; gap: 20px; }
       .challenge-headline { font-size: 48px; max-width: 100%; }
-      .challenge-items { width: 100%; }
+      .challenge-items { width: 100%; margin-left: 0; }
     }
 
     /* ── MOBILE ≤ 560px ── */
     @media (max-width: 560px) {
       .challenge-section { padding: 56px var(--page-px); }
+      .europe-map { top: calc(50% + 0.19px - 100px); }
       .challenge-section__inner { gap: 40px; }
       .challenge-headline { font-size: 36px; }
       .challenge-item { min-width: 100%; padding-right: 0; }
@@ -1819,14 +1820,15 @@
         <article class="challenge-item" aria-label="Challenge 1 of 3">
           <!-- 112×112 clipped icon — wheel spins, hamster bobs -->
           <div class="challenge-icon" aria-hidden="true">
+            <!-- wheel renders first (behind), body+legs on top -->
+            <div class="hamster-wheel">
+              <img src="assets/images/wheel.webp" alt="" />
+            </div>
             <div class="hamster-body">
               <img src="assets/images/hamster-body.webp" alt="" />
             </div>
             <div class="hamster-legs">
               <img src="assets/images/hamster-legs.webp" alt="" />
-            </div>
-            <div class="hamster-wheel">
-              <img src="assets/images/wheel.webp" alt="" />
             </div>
           </div>
           <div class="challenge-item__txt">
