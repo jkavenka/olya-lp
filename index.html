@@ -1204,17 +1204,14 @@
 
 
     /* ══════════════════════════════════════════════════════════════
-       BENEFITS / WHY OLYA
+       BENEFITS — WHY OLYA
     ══════════════════════════════════════════════════════════════ */
     .benefits-section {
       position: relative;
       border-top: 0.5px solid var(--color-border-default);
       padding: 80px var(--page-px) 80px;
-      /* overflow:hidden clips flower/phone vertically without causing h-scroll.
-         Both elements are position:absolute so they don't expand document width. */
-      overflow: hidden;
+      overflow: hidden; /* clips flower vertically; absolute elements don't expand h-scroll */
     }
-
     .benefits-section__inner {
       max-width: var(--max-w);
       margin: 0 auto;
@@ -1223,38 +1220,8 @@
       gap: 72px;
     }
 
-    /* ── Flower decoration ── */
-    /* position:absolute + large negative left = bleeds off left edge.
-       overflow:hidden on section clips it vertically.
-       No horizontal scroll because absolute elements don't expand scroll width
-       when the containing block (section) has overflow:hidden. */
-    .benefits-flower {
-      position: absolute;
-      width: 401px;
-      height: 401px;
-      top: 231px;
-      left: -112px;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .benefits-flower img { display: block; width: 100%; height: 100%; }
-
-    /* ── iPhone ── */
-    .benefits-iphone {
-      position: absolute;
-      width: 215px;
-      height: 414px;
-      top: 223px;
-      left: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .benefits-iphone img { display: block; width: 100%; height: 100%; }
-
     /* ── Section header ── */
     .benefits-header {
-      position: relative;
-      z-index: 2;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -1271,12 +1238,52 @@
       max-width: 895px;
     }
 
-    /* ── Benefits list ── */
-    .benefits-list {
+    /* ── Content row: phone-col + list-cols ── */
+    /* Desktop: phone is an in-flow flex child so its top always aligns
+       with the first list item (no JS needed, flex align-items:flex-start). */
+    .benefits-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    /* ── Phone column (desktop) ── */
+    .benefits-phone-col {
+      position: relative; /* flower anchor */
+      flex-shrink: 0;
+      width: 215px;
+      /* Hidden on tablet/mobile — phone-block used instead */
+    }
+
+    /* Flower — absolute inside phone-col, bleeds past section left edge.
+       left: -112px - page-px positions it so on standard viewports (≤1280px)
+       it sits at -112px from viewport left, matching Figma exactly.
+       On wider viewports it shifts right slightly but still bleeds left. */
+    .benefits-flower {
+      position: absolute;
+      width: 401px;
+      height: 401px;
+      /* Figma: flower top = phone top + 8px */
+      top: 8px;
+      left: calc(-112px - var(--page-px));
+      pointer-events: none;
+      z-index: 0;
+    }
+    .benefits-flower img { display: block; width: 100%; height: 100%; }
+
+    /* iPhone — in-flow inside phone-col, z-index above flower */
+    .benefits-iphone {
       position: relative;
-      z-index: 2;
-      /* Indent right to clear the iPhone (215px) + gap */
-      padding-left: 255px;
+      z-index: 1;
+      width: 215px;
+      height: 414px;
+    }
+    .benefits-iphone img { display: block; width: 100%; height: 100%; }
+
+    /* ── List columns ── */
+    .benefits-cols {
+      flex: 1 1 0;
+      min-width: 0;
       display: flex;
       gap: 48px;
     }
@@ -1296,7 +1303,6 @@
       padding: 20px 0;
       border-top: 1px solid var(--color-border-default);
     }
-    /* blob behind number */
     .benefits-item__blob {
       position: absolute;
       width: 42px;
@@ -1307,7 +1313,6 @@
       z-index: 0;
     }
     .benefits-item__blob img { display: block; width: 100%; height: 100%; }
-
     .benefits-item__num {
       position: relative;
       z-index: 1;
@@ -1349,9 +1354,8 @@
       color: var(--color-text-primary);
     }
 
-    /* Desktop-only elements (flower + iPhone as absolute overlays) */
-    .benefits-flower--desktop { display: block; }
-    /* Phone block only shown on tablet/mobile */
+    /* Desktop-only: phone col visible, phone-block hidden */
+    .benefits-phone-col { display: block; }
     .benefits-phone-block { display: none; }
 
     /* ── TABLET ≤ 900px ── */
@@ -1359,74 +1363,62 @@
       .benefits-section { padding: 64px var(--page-px) 64px; }
       .benefits-section__inner { gap: 56px; }
 
-      /* Header stacks vertically */
-      .benefits-header { flex-direction: column; gap: 24px; }
+      /* Fix 4: header centre-aligned on tablet */
+      .benefits-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+      }
       .benefits-headline { font-size: 48px; max-width: 100%; }
 
-      /* Flower: centred at top, 496×496px */
-      .benefits-flower {
+      /* Hide desktop phone-col; show phone-block */
+      .benefits-phone-col { display: none; }
+      .benefits-phone-block {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 455px;
+        /* Fix 3: phone-block goes BELOW list — use order */
+        order: 2;
+      }
+
+      /* Fix 3: list goes first (order:1 < order:2) */
+      .benefits-content { flex-direction: column; gap: 40px; }
+      .benefits-cols { flex-direction: column; gap: 0; order: 1; }
+      .benefits-col { flex: none; }
+
+      /* Tablet phone-block internals: flower centred 496px, iPhone offset per Figma */
+      .benefits-phone-block .benefits-flower {
+        position: absolute;
         width: 496px; height: 496px;
         top: 0; left: 50%;
         transform: translateX(-50%);
       }
-
-      /* iPhone: 215×414, left:140px, top:40px inside the phone block.
-         The phone block sits as a normal flex child above the list. */
-      .benefits-iphone {
-        position: relative;
-        width: 215px; height: 414px;
-        top: auto; left: auto;
-        margin: 0 auto;
-      }
-
-      /* Hide desktop absolute overlays, show phone block */
-      .benefits-flower--desktop { display: none; }
-      .benefits-iphone--desktop { display: none; }
-      .benefits-phone-block { display: block; }
-
-      /* Phone block — flower + iPhone stacked, shown above list */
-      .benefits-phone-block {
-        position: relative;
-        width: 100%;
-        height: 455px; /* 496px flower - some overlap */
-        display: block;
-      }
-      .benefits-phone-block .benefits-flower {
-        top: 0; left: 50%; transform: translateX(-50%);
-      }
       .benefits-phone-block .benefits-iphone {
         position: absolute;
-        left: 50%;
-        transform: translateX(calc(-50% + 28px)); /* offset: 140.5 - 496/2 = -107.5 → centre+28 */
+        width: 215px; height: 414px;
+        /* Figma tablet: iPhone left:140.5, top:40.71 inside phone block */
+        left: calc(50% - 248px + 140.5px); /* 50% - flower_half + iphone_left */
         top: 40px;
-        margin: 0;
       }
-
-      /* List: single column, no left indent */
-      .benefits-list {
-        padding-left: 0;
-        flex-direction: column;
-        gap: 0;
-      }
-      .benefits-col { flex: none; }
     }
 
     /* ── MOBILE ≤ 560px ── */
     @media (max-width: 560px) {
       .benefits-section { padding: 56px var(--page-px) 56px; }
       .benefits-section__inner { gap: 40px; }
+
+      /* Fix 4: header centre-aligned on mobile */
       .benefits-headline { font-size: 36px; }
 
-      /* Flower: 400×400px centred at bottom of phone block */
-      .benefits-phone-block {
-        height: 400px;
-      }
+      /* Phone-block: flower 400px at bottom, iPhone 173×333 centred */
+      .benefits-phone-block { height: 400px; }
       .benefits-phone-block .benefits-flower {
         width: 400px; height: 400px;
         top: auto; bottom: 0;
         left: 50%; transform: translateX(-50%);
       }
-      /* iPhone: 173×333px, centred */
       .benefits-phone-block .benefits-iphone {
         width: 173px; height: 333px;
         top: 50%; left: 50%;
@@ -1681,16 +1673,6 @@
   ══════════════════════════════════════════════════════════ -->
   <section class="benefits-section">
 
-    <!-- Flower — desktop: absolute left-bleed; tablet/mobile: inside phone block -->
-    <div class="benefits-flower benefits-flower--desktop" aria-hidden="true">
-      <img src="assets/images/flower.webp" alt="" loading="lazy" />
-    </div>
-
-    <!-- iPhone — desktop: absolute left column -->
-    <div class="benefits-iphone benefits-iphone--desktop" aria-hidden="true">
-      <img src="assets/images/iPhone.webp" alt="Olya app on iPhone" loading="lazy" />
-    </div>
-
     <div class="benefits-section__inner">
 
       <!-- Header -->
@@ -1702,18 +1684,21 @@
         <h2 class="benefits-headline" data-i18n="benefits-headline">The only full-stack AI content OS built for European teams.</h2>
       </div>
 
-      <!-- Tablet/mobile: phone block (flower + iPhone) inline -->
-      <div class="benefits-phone-block" aria-hidden="true">
-        <div class="benefits-flower" aria-hidden="true">
-          <img src="assets/images/flower.webp" alt="" loading="lazy" />
-        </div>
-        <div class="benefits-iphone" aria-hidden="true">
-          <img src="assets/images/iPhone.webp" alt="" loading="lazy" />
-        </div>
-      </div>
+      <!-- Content row: phone-col (desktop) + list-cols -->
+      <div class="benefits-content">
 
-      <!-- Benefits list -->
-      <div class="benefits-list">
+        <!-- Desktop phone column: in-flow, top auto-aligns to first item -->
+        <div class="benefits-phone-col" aria-hidden="true">
+          <div class="benefits-flower">
+            <img src="assets/images/flower.webp" alt="" loading="lazy" />
+          </div>
+          <div class="benefits-iphone">
+            <img src="assets/images/iPhone.webp" alt="Olya app on iPhone" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- List columns -->
+        <div class="benefits-cols">
         <!-- Column 1 -->
         <div class="benefits-col">
           <div class="benefits-item">
@@ -1769,7 +1754,19 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /.benefits-cols -->
+
+        <!-- Tablet/mobile: phone block shown below list via CSS order -->
+        <div class="benefits-phone-block" aria-hidden="true">
+          <div class="benefits-flower">
+            <img src="assets/images/flower.webp" alt="" loading="lazy" />
+          </div>
+          <div class="benefits-iphone">
+            <img src="assets/images/iPhone.webp" alt="" loading="lazy" />
+          </div>
+        </div>
+
+      </div><!-- /.benefits-content -->
 
     </div>
   </section>
