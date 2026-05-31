@@ -1457,6 +1457,184 @@
       }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       CHALLENGE SECTION
+    ══════════════════════════════════════════════════════════════ */
+    .challenge-section {
+      border-top: 0.5px solid var(--color-border-default);
+      padding: 80px var(--page-px) 80px;
+    }
+    .challenge-section__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+      align-items: flex-end; /* items module right-aligns to headline width */
+    }
+
+    /* ── Header ── */
+    .challenge-header {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .challenge-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+      max-width: 895px;
+    }
+
+    /* ── Icons module — right-aligned, matches headline width ── */
+    .challenge-items {
+      width: 895px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .challenge-item {
+      flex: 1 0 0;
+      min-width: 265px;
+      border-top: 1px solid var(--color-border-default);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 40px 20px 40px 0;
+    }
+    /* Last item has more right padding per Figma */
+    .challenge-item:last-child { padding-right: 40px; }
+
+    /* ── Icon containers ── */
+    /* Hamster: 112×112, clips internally */
+    .challenge-icon {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      flex-shrink: 0;
+      overflow: hidden; /* clips hamster layers */
+    }
+
+    /* Europe: same 112×112 placeholder but NO overflow clip — map bleeds */
+    .challenge-icon--europe {
+      overflow: visible;
+    }
+
+    /* Content: simple fill */
+    .challenge-icon--content img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Hamster layers ── */
+    /* Body: top: 50%+5.29px, translateY(-50%), left:8px, right:16px (w=88px) */
+    .hamster-body {
+      position: absolute;
+      left: 8px;
+      right: 16px;
+      top: calc(50% + 5.29px);
+      transform: translateY(-50%);
+      aspect-ratio: 176 / 124;
+      animation: hamsterBob 1.4s ease-in-out infinite alternate;
+    }
+    .hamster-body img { width: 100%; height: 100%; display: block; }
+
+    /* Legs: bottom:7.51px, left:9.5px, right:19.5px (w=83px) */
+    .hamster-legs {
+      position: absolute;
+      left: 9.5px;
+      right: 19.5px;
+      bottom: 7.51px;
+      aspect-ratio: 91 / 43;
+      animation: hamsterBob 1.4s ease-in-out infinite alternate;
+    }
+    .hamster-legs img { width: 100%; height: 100%; display: block; }
+
+    /* Wheel: top:50%-5px, translateY(-50%), left:-1.5px, right:11.5px (w=102px) */
+    .hamster-wheel {
+      position: absolute;
+      left: -1.5px;
+      right: 11.5px;
+      top: calc(50% - 5px);
+      transform: translateY(-50%);
+      aspect-ratio: 204 / 192;
+      animation: wheelSpin 2.5s linear infinite;
+    }
+    .hamster-wheel img { width: 100%; height: 100%; display: block; }
+
+    @keyframes wheelSpin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+    @keyframes hamsterBob {
+      from { transform: translateY(-50%) translateY(0px); }
+      to   { transform: translateY(-50%) translateY(-4px); }
+    }
+
+    /* ── Europe map ── */
+    /* 319.5px centred at 50%+0.69px, 50%+0.19px relative to 112px container */
+    .europe-map {
+      position: absolute;
+      width: 319.5px;
+      height: 319.5px;
+      left: calc(50% + 0.69px - 159.75px);  /* centre offset */
+      top:  calc(50% + 0.19px - 159.75px);
+      pointer-events: none;
+    }
+    .europe-map img { width: 100%; height: 100%; display: block; }
+
+    /* ── Item text ── */
+    .challenge-item__txt {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .challenge-item__title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1;
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.36px;
+      color: var(--color-text-primary);
+    }
+    .challenge-item__desc {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── TABLET ≤ 900px ── */
+    @media (max-width: 900px) {
+      .challenge-section { padding: 64px var(--page-px); }
+      .challenge-section__inner { gap: 48px; align-items: stretch; }
+      .challenge-header { flex-direction: column; gap: 20px; }
+      .challenge-headline { font-size: 48px; max-width: 100%; }
+      .challenge-items { width: 100%; }
+    }
+
+    /* ── MOBILE ≤ 560px ── */
+    @media (max-width: 560px) {
+      .challenge-section { padding: 56px var(--page-px); }
+      .challenge-section__inner { gap: 40px; }
+      .challenge-headline { font-size: 36px; }
+      .challenge-item { min-width: 100%; padding-right: 0; }
+      .challenge-item:last-child { padding-right: 0; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -1616,6 +1794,74 @@
     </div>
   </div>
 
+
+  <!-- ══════════════════════════════════════════════════════════
+       CHALLENGE SECTION
+  ══════════════════════════════════════════════════════════ -->
+  <section class="challenge-section">
+    <div class="challenge-section__inner">
+
+      <!-- Header: label left, headline right -->
+      <div class="challenge-header">
+        <div class="section-label">
+          <img class="section-label__dot" src="assets/images/olya-dot-blob.svg" alt="" aria-hidden="true" />
+          <span class="section-label__text" data-i18n="challenge-label">The challenge</span>
+        </div>
+        <h2 class="challenge-headline" data-i18n="challenge-headline">
+          Content demand has exploded.<br>The tools haven&#8217;t caught up.
+        </h2>
+      </div>
+
+      <!-- Three icon lockups -->
+      <div class="challenge-items">
+
+        <!-- Lockup 1: Hamster wheel -->
+        <article class="challenge-item" aria-label="Challenge 1 of 3">
+          <!-- 112×112 clipped icon — wheel spins, hamster bobs -->
+          <div class="challenge-icon" aria-hidden="true">
+            <div class="hamster-body">
+              <img src="assets/images/hamster-body.webp" alt="" />
+            </div>
+            <div class="hamster-legs">
+              <img src="assets/images/hamster-legs.webp" alt="" />
+            </div>
+            <div class="hamster-wheel">
+              <img src="assets/images/wheel.webp" alt="" />
+            </div>
+          </div>
+          <div class="challenge-item__txt">
+            <p class="challenge-item__title" data-i18n="c1-title">Content pressure is relentless.</p>
+            <p class="challenge-item__desc" data-i18n="c1-desc">Instagram. TikTok. LinkedIn. YouTube Shorts. Infinite pressure to publish daily, in multiple formats, on-brand.</p>
+          </div>
+        </article>
+
+        <!-- Lockup 2: Europe map (bleeds out of icon frame) -->
+        <article class="challenge-item" aria-label="Challenge 2 of 3">
+          <div class="challenge-icon challenge-icon--europe" aria-hidden="true">
+            <div class="europe-map">
+              <img src="assets/images/europe.webp" alt="" loading="lazy" />
+            </div>
+          </div>
+          <div class="challenge-item__txt">
+            <p class="challenge-item__title" data-i18n="c2-title">European teams are invisible to US tools.</p>
+            <p class="challenge-item__desc" data-i18n="c2-desc">Every major AI content platform is English-first. French, German, Spanish, Italian &#8212; treated as an afterthought. GDPR? Rarely considered.</p>
+          </div>
+        </article>
+
+        <!-- Lockup 3: Content illustration -->
+        <article class="challenge-item" aria-label="Challenge 3 of 3">
+          <div class="challenge-icon challenge-icon--content" aria-hidden="true">
+            <img src="assets/images/content.webp" alt="" loading="lazy" />
+          </div>
+          <div class="challenge-item__txt">
+            <p class="challenge-item__title" data-i18n="c3-title">Schedulers don&#8217;t create. Generators don&#8217;t publish.</p>
+            <p class="challenge-item__desc" data-i18n="c3-desc">You end up juggling 35+ disconnected tools &#8212; writing scripts in one, generating visuals in another, scheduling in a third. Nothing connects.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════════════════════════════════════════════════
        HOW OLYA WORKS
@@ -1959,6 +2205,14 @@
       'b5-desc': 'Manage unlimited client brands and personas from a single agency account, with role-based access control.',
       'b6-title': 'Built for the platforms that matter',
       'b6-desc': 'Instagram, TikTok, LinkedIn, and YouTube Shorts — with format-specific generation and scheduling built in.',
+      'challenge-label': 'The challenge',
+      'challenge-headline': 'Content demand has exploded.<br>The tools haven’t caught up.',
+      'c1-title': 'Content pressure is relentless.',
+      'c1-desc': 'Instagram. TikTok. LinkedIn. YouTube Shorts. Infinite pressure to publish daily, in multiple formats, on-brand.',
+      'c2-title': 'European teams are invisible to US tools.',
+      'c2-desc': 'Every major AI content platform is English-first. French, German, Spanish, Italian — treated as an afterthought. GDPR? Rarely considered.',
+      'c3-title': 'Schedulers don’t create. Generators don’t publish.',
+      'c3-desc': 'You end up juggling 35+ disconnected tools — writing scripts in one, generating visuals in another, scheduling in a third. Nothing connects.',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -2010,6 +2264,14 @@
       'b5-desc': 'Gérez des marques et personas illimités depuis un seul compte agence, avec contrôle d’accès par rôle.',
       'b6-title': 'Conçu pour les plateformes qui comptent',
       'b6-desc': 'Instagram, TikTok, LinkedIn et YouTube Shorts — avec génération et planification spécifiques.',
+      'challenge-label': 'Le défi',
+      'challenge-headline': 'La demande de contenu a explosé.<br>Les outils n’ont pas suivi.',
+      'c1-title': 'La pression du contenu est implacable.',
+      'c1-desc': 'Instagram. TikTok. LinkedIn. YouTube Shorts. Une pression infinie pour publier quotidiennement, dans plusieurs formats, en respectant la marque.',
+      'c2-title': 'Les équipes européennes sont invisibles pour les outils américains.',
+      'c2-desc': 'Chaque grande plateforme IA est d’abord en anglais. Le français, l’allemand, l’espagnol, l’italien — traités comme une arrière-pensée. RGPD ? Rarement considéré.',
+      'c3-title': 'Les planificateurs ne créent pas. Les générateurs ne publient pas.',
+      'c3-desc': 'Vous jongléz avec 35+ outils déconnectés — scripts dans un, visuels dans un autre, planification dans un troisième. Rien ne se connecte.',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -2061,6 +2323,14 @@
       'b5-desc': 'Verwalten Sie unbegrenzte Kundenmarken von einem einzigen Agenturkonto mit rollenbasierter Zugriffskontrolle.',
       'b6-title': 'Für die wichtigen Plattformen gebaut',
       'b6-desc': 'Instagram, TikTok, LinkedIn und YouTube Shorts — mit plattformspezifischer Generierung und Planung.',
+      'challenge-label': 'Die Herausforderung',
+      'challenge-headline': 'Die Content-Nachfrage ist explodiert.<br>Die Tools haben nicht mitgehalten.',
+      'c1-title': 'Der Content-Druck ist unerbittlich.',
+      'c1-desc': 'Instagram. TikTok. LinkedIn. YouTube Shorts. Unendlicher Druck, täglich in mehreren Formaten und markenkonform zu veröffentlichen.',
+      'c2-title': 'Europäische Teams sind für US-Tools unsichtbar.',
+      'c2-desc': 'Jede große KI-Content-Plattform ist englischzentriert. Französisch, Deutsch, Spanisch, Italienisch — als Nachgedanke behandelt. DSGVO? Kaum berücksichtigt.',
+      'c3-title': 'Planer erstellen nicht. Generatoren veröffentlichen nicht.',
+      'c3-desc': 'Sie jonglieren mit 35+ unverbundenen Tools — Skripte in einem, Visuals in einem anderen, Planung in einem dritten. Nichts ist verbunden.',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -2112,6 +2382,14 @@
       'b5-desc': 'Gestisci brand e personas illimitati da un unico account agenzia con controllo degli accessi basato sui ruoli.',
       'b6-title': 'Costruito per le piattaforme che contano',
       'b6-desc': 'Instagram, TikTok, LinkedIn e YouTube Shorts — con generazione e pianificazione specifiche per formato.',
+      'challenge-label': 'La sfida',
+      'challenge-headline': 'La domanda di contenuti è esplosa.<br>Gli strumenti non hanno tenuto il passo.',
+      'c1-title': 'La pressione dei contenuti è incessante.',
+      'c1-desc': 'Instagram. TikTok. LinkedIn. YouTube Shorts. Pressione infinita per pubblicare ogni giorno, in più formati, rispettando il brand.',
+      'c2-title': 'I team europei sono invisibili agli strumenti americani.',
+      'c2-desc': 'Ogni grande piattaforma AI è prima di tutto in inglese. Francese, tedesco, spagnolo, italiano — trattati come un ripensamento. GDPR? Raramente considerato.',
+      'c3-title': 'I pianificatori non creano. I generatori non pubblicano.',
+      'c3-desc': 'Finisci per destreggiarti con 35+ strumenti scollegati — script in uno, visual in un altro, pianificazione in un terzo. Niente si collega.',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -2163,6 +2441,14 @@
       'b5-desc': 'Gestiona marcas y personas ilimitadas desde una sola cuenta de agencia con control de acceso basado en roles.',
       'b6-title': 'Construido para las plataformas que importan',
       'b6-desc': 'Instagram, TikTok, LinkedIn y YouTube Shorts — con generación y programación específicas por formato.',
+      'challenge-label': 'El desafío',
+      'challenge-headline': 'La demanda de contenido ha explotado.<br>Las herramientas no han seguido el ritmo.',
+      'c1-title': 'La presión del contenido es implacable.',
+      'c1-desc': 'Instagram. TikTok. LinkedIn. YouTube Shorts. Presión infinita para publicar a diario, en múltiples formatos, con coherencia de marca.',
+      'c2-title': 'Los equipos europeos son invisibles para las herramientas estadounidenses.',
+      'c2-desc': 'Cada gran plataforma de IA es primero en inglés. Francés, alemán, español, italiano — tratados como una ocurrencia tardía. ¿RGPD? Rara vez considerado.',
+      'c3-title': 'Los programadores no crean. Los generadores no publican.',
+      'c3-desc': 'Acabas haciendo malabarismos con 35+ herramientas desconectadas — scripts en una, visuales en otra, programación en una tercera. Nada se conecta.',
     },
   };
   (function () {
