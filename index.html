@@ -1644,6 +1644,164 @@
       .challenge-item:last-child { padding-right: 0; }
     }
 
+
+    /* ══════════════════════════════════════════════════════════════
+       SIDEKICK SECTION
+    ══════════════════════════════════════════════════════════════ */
+    .sidekick-section {
+      border-top: 0.5px solid var(--color-border-default);
+    }
+
+    /* ── Centred header ── */
+    .sidekick-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 80px var(--page-px);
+      text-align: center;
+    }
+    .sidekick-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 60;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+      max-width: 895px;
+      text-align: center;
+    }
+
+    /* ── Cards module ── */
+    .sidekick-cards {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--page-px) 120px;
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    /* ── Individual card ── */
+    .sidekick-card {
+      flex: 1 0 265px;
+      border-radius: var(--radius-card);
+      padding: 20px;
+      position: relative;
+      /* No overflow:hidden — images bleed beyond card edges */
+    }
+    .sidekick-card--indigo { background: #ebf0ff; }
+    .sidekick-card--sky    { background: #e3f8ff; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 40px; }
+    .sidekick-card--dawn   { background: #f4ebff; }
+
+    /* Desktop: all cards fixed height 400px */
+    .sidekick-card { height: 400px; }
+
+    /* ── Tag ── */
+    .sidekick-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      padding: 1px 6px 0;
+      background: #fff;
+      border-radius: 8px;
+      font-family: 'Chivo Mono', monospace;
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 1.4;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Card text ── */
+    .sidekick-card__txt {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sidekick-card__headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 40;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--color-text-primary);
+    }
+    .sidekick-card__body {
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: -0.075px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── Decorative images — absolute, bleed beyond card ── */
+    .sidekick-img {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sidekick-img img { display: block; width: 100%; height: 100%; }
+
+    /* Desktop positions (from Figma) */
+    .sidekick-img--people {
+      left: 130px; top: 187px;
+      width: 261.6px; height: 261.6px;
+    }
+    .sidekick-img--clouds {
+      left: 44px; top: -42px;
+      width: 312.9px; height: 251.5px;
+    }
+    .sidekick-img--team {
+      bottom: 0; right: 20px;
+      width: 308px; height: 262px;
+    }
+
+    /* ── TABLET ≤ 900px ── */
+    @media (max-width: 900px) {
+      .sidekick-header { padding: 64px var(--page-px); gap: 40px; }
+      .sidekick-headline { font-size: 48px; }
+      .sidekick-cards { padding-bottom: 64px; flex-wrap: wrap; }
+      /* Tablet: no fixed height — cards size to content */
+      .sidekick-card { height: auto; }
+      /* Card 02 keeps explicit height on tablet (Figma: 310px) */
+      .sidekick-card--sky { height: 310px; }
+      /* Card 03 spans full width on tablet */
+      .sidekick-card--dawn { flex-basis: 100%; }
+      .sidekick-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
+      /* Tablet image positions */
+      .sidekick-img--people { left: 95px; top: 90px; }
+      .sidekick-img--clouds { left: 58px; top: 95px; }
+      .sidekick-img--team   { bottom: -3px; right: 0; }
+    }
+
+    /* ── MOBILE ≤ 560px ── */
+    @media (max-width: 560px) {
+      .sidekick-header { padding: 56px var(--page-px) 48px; gap: 30px; }
+      .sidekick-headline { font-size: 32px; line-height: 0.95; letter-spacing: -0.03em; }
+      .sidekick-cards { padding: 0 var(--page-px) 56px; flex-direction: column; }
+      .sidekick-card { flex-basis: auto; border-radius: 20px; }
+      /* Mobile fixed heights per Figma */
+      .sidekick-card--indigo { height: 310px; }
+      .sidekick-card--sky    { height: 260px; }
+      .sidekick-card--dawn   { height: 305px; }
+      .sidekick-card__headline { font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+      /* Mobile image positions */
+      .sidekick-img--people { left: 153px; top: 150px; width: 190px; height: 190px; }
+      .sidekick-img--clouds { left: 57px; top: 46px; width: 309px; height: 248px; }
+      .sidekick-img--team   { bottom: -1px; right: 0; width: 273px; height: 233px; }
+    }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0;
       margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
@@ -2076,6 +2234,64 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════════════
+       SIDEKICK SECTION — Built for the people who make content happen
+  ══════════════════════════════════════════════════════════ -->
+  <section class="sidekick-section">
+
+    <!-- Centred header -->
+    <div class="sidekick-header">
+      <div class="section-label">
+        <img class="section-label__dot" src="assets/images/olya-dot.svg" alt="" aria-hidden="true" />
+        <span class="section-label__text" data-i18n="sidekick-label">Your creative sidekick</span>
+      </div>
+      <h2 class="sidekick-headline" data-i18n="sidekick-headline">
+        Built for the people who make content happen.
+      </h2>
+    </div>
+
+    <!-- Cards -->
+    <div class="sidekick-cards">
+
+      <!-- Card 01: For Agencies -->
+      <article class="sidekick-card sidekick-card--indigo">
+        <div class="sidekick-img sidekick-img--people" aria-hidden="true">
+          <img src="assets/images/people.webp" alt="" loading="lazy" />
+        </div>
+        <span class="sidekick-tag" data-i18n="sidekick-tag1">For Agencies</span>
+        <div class="sidekick-card__txt" style="margin-top:24px;">
+          <p class="sidekick-card__headline" data-i18n="sidekick-c1-headline">Manage every client&#8217;s brand voice from one dashboard.</p>
+          <p class="sidekick-card__body" data-i18n="sidekick-c1-body">Define a persona&#8217;s face, voice, language, and niche. Olya generates photos, captions, scripts, and short-form videos at scale &#8212; in any European language, across Instagram, TikTok, and YouTube Shorts.</p>
+        </div>
+      </article>
+
+      <!-- Card 02: For Brands -->
+      <article class="sidekick-card sidekick-card--sky">
+        <div class="sidekick-img sidekick-img--clouds" aria-hidden="true">
+          <img src="assets/images/clouds.webp" alt="" loading="lazy" />
+        </div>
+        <div class="sidekick-card__txt">
+          <span class="sidekick-tag" data-i18n="sidekick-tag2">For Brands</span>
+          <p class="sidekick-card__headline" data-i18n="sidekick-c2-headline">Produce more content without hiring more people.</p>
+          <p class="sidekick-card__body" data-i18n="sidekick-c2-body">Build a brand voice once and let Olya generate on-brand posts, reels, and captions daily &#8212; in every language your market needs.</p>
+        </div>
+      </article>
+
+      <!-- Card 03: For Solo Professionals -->
+      <article class="sidekick-card sidekick-card--dawn">
+        <div class="sidekick-img sidekick-img--team" aria-hidden="true">
+          <img src="assets/images/team-of-10.webp" alt="" loading="lazy" />
+        </div>
+        <div class="sidekick-card__txt">
+          <span class="sidekick-tag" data-i18n="sidekick-tag3">For Solo Professionals</span>
+          <p class="sidekick-card__headline" data-i18n="sidekick-c3-headline">Look like a team of ten.</p>
+          <p class="sidekick-card__body" data-i18n="sidekick-c3-body">Build your AI persona, set your tone, and let Olya handle daily content creation, scheduling, and reporting &#8212; while you focus on strategy.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
        FORM SECTION — "Be first in line"
   ══════════════════════════════════════════════════════════ -->
   <section class="cta-section" id="early-access">
@@ -2224,6 +2440,17 @@
       'c2-desc': 'Every major AI content platform is English-first. French, German, Spanish, Italian — treated as an afterthought. GDPR? Rarely considered.',
       'c3-title': 'Schedulers don’t create. Generators don’t publish.',
       'c3-desc': 'You end up juggling 35+ disconnected tools — writing scripts in one, generating visuals in another, scheduling in a third. Nothing connects.',
+      'sidekick-label': 'Your creative sidekick',
+      'sidekick-headline': 'Built for the people who make content happen.',
+      'sidekick-tag1': 'For Agencies',
+      'sidekick-tag2': 'For Brands',
+      'sidekick-tag3': 'For Solo Professionals',
+      'sidekick-c1-headline': 'Manage every client’s brand voice from one dashboard.',
+      'sidekick-c1-body': 'Define a persona’s face, voice, language, and niche. Olya generates photos, captions, scripts, and short-form videos at scale — in any European language, across Instagram, TikTok, and YouTube Shorts.',
+      'sidekick-c2-headline': 'Produce more content without hiring more people.',
+      'sidekick-c2-body': 'Build a brand voice once and let Olya generate on-brand posts, reels, and captions daily — in every language your market needs.',
+      'sidekick-c3-headline': 'Look like a team of ten.',
+      'sidekick-c3-body': 'Build your AI persona, set your tone, and let Olya handle daily content creation, scheduling, and reporting — while you focus on strategy.',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -2283,6 +2510,17 @@
       'c2-desc': 'Chaque grande plateforme IA est d’abord en anglais. Le français, l’allemand, l’espagnol, l’italien — traités comme une arrière-pensée. RGPD ? Rarement considéré.',
       'c3-title': 'Les planificateurs ne créent pas. Les générateurs ne publient pas.',
       'c3-desc': 'Vous jongléz avec 35+ outils déconnectés — scripts dans un, visuels dans un autre, planification dans un troisième. Rien ne se connecte.',
+      'sidekick-label': 'Votre assistant créatif',
+      'sidekick-headline': 'Conçu pour ceux qui font vivre le contenu.',
+      'sidekick-tag1': 'Pour les agences',
+      'sidekick-tag2': 'Pour les marques',
+      'sidekick-tag3': 'Pour les indépendants',
+      'sidekick-c1-headline': 'Gérez la voix de chaque client depuis un seul tableau de bord.',
+      'sidekick-c1-body': 'Définissez le visage, la voix, la langue et la niche d’une persona. Olya génère photos, légendes, scripts et vidéos courtes à grande échelle.',
+      'sidekick-c2-headline': 'Produisez plus de contenu sans recruter davantage.',
+      'sidekick-c2-body': 'Construisez une voix de marque une fois et laissez Olya générer des posts, reels et légendes quotidiennement.',
+      'sidekick-c3-headline': 'Ressemblez à une équipe de dix.',
+      'sidekick-c3-body': 'Créez votre persona IA, définissez votre ton et laissez Olya gérer la création de contenu, la planification et les rapports.',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -2342,6 +2580,17 @@
       'c2-desc': 'Jede große KI-Content-Plattform ist englischzentriert. Französisch, Deutsch, Spanisch, Italienisch — als Nachgedanke behandelt. DSGVO? Kaum berücksichtigt.',
       'c3-title': 'Planer erstellen nicht. Generatoren veröffentlichen nicht.',
       'c3-desc': 'Sie jonglieren mit 35+ unverbundenen Tools — Skripte in einem, Visuals in einem anderen, Planung in einem dritten. Nichts ist verbunden.',
+      'sidekick-label': 'Ihr kreativer Assistent',
+      'sidekick-headline': 'Für die Menschen gebaut, die Content zum Leben erwecken.',
+      'sidekick-tag1': 'Für Agenturen',
+      'sidekick-tag2': 'Für Marken',
+      'sidekick-tag3': 'Für Solo-Profis',
+      'sidekick-c1-headline': 'Verwalten Sie die Markenstimme jedes Kunden von einem Dashboard.',
+      'sidekick-c1-body': 'Definieren Sie das Gesicht, die Stimme, die Sprache und die Nische einer Persona. Olya generiert Fotos, Bildunterschriften, Skripte und Kurzvideos.',
+      'sidekick-c2-headline': 'Mehr Content produzieren, ohne mehr Mitarbeiter einzustellen.',
+      'sidekick-c2-body': 'Bauen Sie einmal eine Markenstimme auf und lassen Sie Olya täglich markenkonforme Posts, Reels und Bildunterschriften generieren.',
+      'sidekick-c3-headline': 'Wirken Sie wie ein Team von zehn.',
+      'sidekick-c3-body': 'Erstellen Sie Ihre KI-Persona, legen Sie Ihren Ton fest und lassen Sie Olya die tägliche Content-Erstellung übernehmen.',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -2401,6 +2650,17 @@
       'c2-desc': 'Ogni grande piattaforma AI è prima di tutto in inglese. Francese, tedesco, spagnolo, italiano — trattati come un ripensamento. GDPR? Raramente considerato.',
       'c3-title': 'I pianificatori non creano. I generatori non pubblicano.',
       'c3-desc': 'Finisci per destreggiarti con 35+ strumenti scollegati — script in uno, visual in un altro, pianificazione in un terzo. Niente si collega.',
+      'sidekick-label': 'Il tuo assistente creativo',
+      'sidekick-headline': 'Costruito per chi fa vivere i contenuti.',
+      'sidekick-tag1': 'Per le agenzie',
+      'sidekick-tag2': 'Per i brand',
+      'sidekick-tag3': 'Per i professionisti',
+      'sidekick-c1-headline': 'Gestisci la voce di ogni cliente da un’unica dashboard.',
+      'sidekick-c1-body': 'Definisci il volto, la voce, la lingua e la nicchia di una persona. Olya genera foto, didascalie, script e video brevi su scala.',
+      'sidekick-c2-headline': 'Produci più contenuti senza assumere più persone.',
+      'sidekick-c2-body': 'Crea una voce del brand una volta e lascia che Olya generi post, reel e didascalie ogni giorno.',
+      'sidekick-c3-headline': 'Sembrare un team di dieci.',
+      'sidekick-c3-body': 'Crea la tua persona AI, imposta il tuo tono e lascia che Olya gestisca la creazione di contenuti, la pianificazione e i report.',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -2460,6 +2720,17 @@
       'c2-desc': 'Cada gran plataforma de IA es primero en inglés. Francés, alemán, español, italiano — tratados como una ocurrencia tardía. ¿RGPD? Rara vez considerado.',
       'c3-title': 'Los programadores no crean. Los generadores no publican.',
       'c3-desc': 'Acabas haciendo malabarismos con 35+ herramientas desconectadas — scripts en una, visuales en otra, programación en una tercera. Nada se conecta.',
+      'sidekick-label': 'Tu asistente creativo',
+      'sidekick-headline': 'Construido para quienes hacen que el contenido ocurra.',
+      'sidekick-tag1': 'Para agencias',
+      'sidekick-tag2': 'Para marcas',
+      'sidekick-tag3': 'Para profesionales independientes',
+      'sidekick-c1-headline': 'Gestiona la voz de marca de cada cliente desde un panel.',
+      'sidekick-c1-body': 'Define el rostro, la voz, el idioma y el nicho de una persona. Olya genera fotos, pies de foto, guiones y vídeos cortos a escala.',
+      'sidekick-c2-headline': 'Produce más contenido sin contratar más personas.',
+      'sidekick-c2-body': 'Crea una voz de marca una vez y deja que Olya genere publicaciones, reels y pies de foto diariamente.',
+      'sidekick-c3-headline': 'Parecer un equipo de diez.',
+      'sidekick-c3-body': 'Crea tu persona de IA, establece tu tono y deja que Olya se encargue de la creación de contenido, la programación y los informes.',
     },
   };
   (function () {
