@@ -117,18 +117,55 @@
     .site-nav__logo { height: 40px; width: auto; display: block; }
     .site-nav__right { display: flex; align-items: center; gap: 16px; }
 
-    .lang-select {
-      appearance: none;
-      -webkit-appearance: none;
-      background: transparent url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 3.5L9 1' stroke='%23120b39' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 4px center;
+    /* Custom language dropdown */
+    .lang-drop {
+      position: relative;
+      display: inline-block;
+    }
+    .lang-drop__btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
       border: none;
       font-family: 'Figtree', sans-serif;
       font-size: 15px;
       color: var(--color-text-primary);
       cursor: pointer;
-      padding-right: 20px;
+      padding: 0;
+      white-space: nowrap;
     }
-    .lang-select:focus { outline: none; }
+    .lang-drop__btn svg { flex-shrink: 0; transition: transform .2s; }
+    .lang-drop.is-open .lang-drop__btn svg { transform: rotate(180deg); }
+    .lang-drop__list {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--color-border-default);
+      border-radius: 12px;
+      padding: 6px 0;
+      min-width: 140px;
+      box-shadow: 0 4px 16px rgba(18,11,57,.08);
+      z-index: 200;
+    }
+    .lang-drop.is-open .lang-drop__list { display: block; }
+    .lang-drop__item {
+      display: block;
+      width: 100%;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      font-family: 'Figtree', sans-serif;
+      font-size: 15px;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .lang-drop__item:hover { background: var(--color-surface-subtle); }
+    .lang-drop__item.is-active { font-weight: 600; }
 
     .btn-nav--full  { display: inline-flex; }
     .btn-nav--short { display: none; }
@@ -795,7 +832,6 @@
        FOOTER
     ══════════════════════════════════════════════════════════════ */
     .site-footer {
-      border-top: 1px solid var(--color-border-default);
       padding: 40px var(--page-px) 20px;
     }
     .site-footer__inner {
@@ -1844,14 +1880,19 @@
           alt="Olya" width="72" height="40" />
       </a>
       <div class="site-nav__right">
-        <label for="lang-select" class="sr-only">Language</label>
-        <select id="lang-select" class="lang-select" aria-label="Select language">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="it">Italiano</option>
-          <option value="es">Español</option>
-        </select>
+        <div class="lang-drop" id="nav-lang-drop" role="navigation" aria-label="Language selector">
+          <button class="lang-drop__btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-drop__label">En</span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l4 3.5L9 1" stroke="#120b39" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-drop__list" role="listbox">
+            <button class="lang-drop__item is-active" role="option" data-lang="en" data-short="En">English</button>
+            <button class="lang-drop__item" role="option" data-lang="fr" data-short="Fr">Français</button>
+            <button class="lang-drop__item" role="option" data-lang="de" data-short="De">Deutsch</button>
+            <button class="lang-drop__item" role="option" data-lang="it" data-short="It">Italiano</button>
+            <button class="lang-drop__item" role="option" data-lang="es" data-short="Es">Español</button>
+          </div>
+        </div>
         <a href="#early-access" class="btn-nav btn-nav--full" data-i18n="nav-cta-full">Join the waitlist</a>
         <a href="#early-access" class="btn-nav btn-nav--short" data-i18n="nav-cta-short">Join</a>
       </div>
@@ -2751,25 +2792,67 @@
       });
       document.documentElement.lang = lang;
     }
-    select.addEventListener('change', function () {
-      applyLang(this.value);
-      syncLangUI(this.value);
-    });
-
-    // Footer language select — synced with nav select
-    var footerSelect = document.getElementById('footer-lang-select');
+    // Custom language dropdown logic
+    var drops = document.querySelectorAll('.lang-drop');
 
     function syncLangUI(lang) {
-      select.value = lang;
-      if (footerSelect) footerSelect.value = lang;
-    }
-
-    if (footerSelect) {
-      footerSelect.addEventListener('change', function () {
-        applyLang(this.value);
-        syncLangUI(this.value);
+      drops.forEach(function(drop) {
+        var items = drop.querySelectorAll('.lang-drop__item');
+        items.forEach(function(item) {
+          var isActive = item.dataset.lang === lang;
+          item.classList.toggle('is-active', isActive);
+          if (isActive) {
+            var label = drop.querySelector('.lang-drop__label');
+            if (label) label.textContent = item.dataset.short;
+          }
+        });
       });
     }
+
+    function closeAllDrops() {
+      drops.forEach(function(drop) {
+        drop.classList.remove('is-open');
+        drop.querySelector('.lang-drop__btn').setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    drops.forEach(function(drop) {
+      var btn = drop.querySelector('.lang-drop__btn');
+      var items = drop.querySelectorAll('.lang-drop__item');
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var isOpen = drop.classList.contains('is-open');
+        closeAllDrops();
+        if (!isOpen) {
+          drop.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      items.forEach(function(item) {
+        item.addEventListener('click', function() {
+          var lang = this.dataset.lang;
+          applyLang(lang);
+          syncLangUI(lang);
+          closeAllDrops();
+        });
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', function() { closeAllDrops(); });
+
+    // Also update cookie bar text when language changes
+    var cookieTextEl = document.getElementById('cookie-bar-text');
+    var origApplyLang = applyLang;
+    applyLang = function(lang) {
+      origApplyLang(lang);
+      if (cookieTextEl) {
+        var dict = window.OLYA_I18N[lang] || window.OLYA_I18N.en;
+        if (dict['cookie-text']) cookieTextEl.innerHTML = dict['cookie-text'];
+      }
+    };
 
     syncLangUI('en');
   }());
@@ -2887,14 +2970,19 @@
         </div>
 
         <!-- Language switcher — same dropdown as nav, all breakpoints -->
-        <label for="footer-lang-select" class="sr-only">Language</label>
-        <select id="footer-lang-select" class="lang-select" aria-label="Select language">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="it">Italiano</option>
-          <option value="es">Español</option>
-        </select>
+        <div class="lang-drop" id="footer-lang-drop" aria-label="Language selector">
+          <button class="lang-drop__btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-drop__label">En</span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l4 3.5L9 1" stroke="#120b39" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-drop__list" role="listbox">
+            <button class="lang-drop__item is-active" role="option" data-lang="en" data-short="En">English</button>
+            <button class="lang-drop__item" role="option" data-lang="fr" data-short="Fr">Français</button>
+            <button class="lang-drop__item" role="option" data-lang="de" data-short="De">Deutsch</button>
+            <button class="lang-drop__item" role="option" data-lang="it" data-short="It">Italiano</button>
+            <button class="lang-drop__item" role="option" data-lang="es" data-short="Es">Español</button>
+          </div>
+        </div>
 
       </div>
     </div>
