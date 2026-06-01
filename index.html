@@ -1650,6 +1650,7 @@
     ══════════════════════════════════════════════════════════════ */
     .sidekick-section {
       border-top: 0.5px solid var(--color-border-default);
+      overflow: hidden; /* prevents clouds/people/team bleeding past page edge */
     }
 
     /* ── Centred header ── */
@@ -1693,6 +1694,7 @@
     }
     .sidekick-card--indigo { background: #ebf0ff; }
     .sidekick-card--sky    { background: #e3f8ff; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 40px; }
+    /* Tablet overrides justify-content via the breakpoint below */
     .sidekick-card--dawn   { background: #f4ebff; }
 
     /* Desktop: all cards fixed height 400px */
@@ -1779,13 +1781,13 @@
       /* Tablet: no fixed height — cards size to content */
       .sidekick-card { height: auto; }
       /* Cards 01 and 02 match heights (auto = same natural height) */
-      .sidekick-card--sky { height: auto; }
+      .sidekick-card--sky { height: auto; justify-content: flex-start; }
       /* Card 03 spans full width on tablet */
       .sidekick-card--dawn { flex-basis: 100%; }
       .sidekick-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
       /* Tablet image positions */
       .sidekick-img--people { right: 0; left: auto; bottom: -30px; clip-path: inset(0 0 30px 0); }
-      .sidekick-img--clouds { left: 58px; top: 95px; }
+      .sidekick-img--clouds { left: 58px; top: auto; bottom: -10px; }
       .sidekick-img--team   { bottom: -3px; right: 0; }
     }
 
