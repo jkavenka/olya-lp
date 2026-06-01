@@ -1488,10 +1488,9 @@
       line-height: 0.9;
       letter-spacing: -0.03em;
       color: var(--color-text-primary);
-      /* Fixed width so left edge is always 1200-895=305px from inner left,
-         matching challenge-items left edge (also margin-left:auto, width:895px) */
-      width: 895px;
-      flex-shrink: 0;
+      /* max-width so it aligns with items at full width, but shrinks naturally below 1200px */
+      max-width: 895px;
+      width: 100%;
       margin-left: auto;
     }
 
