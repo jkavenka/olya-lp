@@ -1781,7 +1781,7 @@
       /* Tablet: no fixed height — cards size to content */
       .sidekick-card { height: auto; }
       /* Cards 01 and 02 match heights (auto = same natural height) */
-      .sidekick-card--sky { height: auto; justify-content: flex-start; }
+      .sidekick-card--sky { height: auto; justify-content: flex-start; overflow: hidden; }
       /* Card 03 spans full width on tablet */
       .sidekick-card--dawn { flex-basis: 100%; }
       .sidekick-card__headline { font-size: 32px; line-height: 1.1; letter-spacing: -0.02em; }
@@ -1799,9 +1799,12 @@
       .sidekick-card { flex-basis: auto; border-radius: 20px; }
       /* Mobile fixed heights per Figma */
       .sidekick-card--indigo { height: 310px; }
-      .sidekick-card--sky    { height: 260px; }
+      .sidekick-card--sky    { height: 260px; overflow: hidden; }
       .sidekick-card--dawn   { height: 305px; }
       .sidekick-card__headline { font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+      .sidekick-card__txt { gap: 8px; }
+      /* But keep tag-to-headline gap via margin-top on txt when tag is sibling */
+      .sidekick-tag + .sidekick-card__txt { margin-top: 16px; }
       /* Mobile image positions */
       .sidekick-img--people { right: 0; left: auto; bottom: -30px; width: 190px; height: 190px; clip-path: inset(0 0 30px 0); }
       .sidekick-img--clouds { left: 57px; top: 46px; width: 309px; height: 248px; }
