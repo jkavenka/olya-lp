@@ -166,6 +166,11 @@
     }
     .lang-drop__item:hover { background: var(--color-surface-subtle); }
     .lang-drop__item.is-active { font-weight: 600; }
+    /* Footer dropdown opens upward (footer is at page bottom) */
+    .site-footer .lang-drop__list {
+      top: auto;
+      bottom: calc(100% + 8px);
+    }
 
     .btn-nav--full  { display: inline-flex; }
     .btn-nav--short { display: none; }
