@@ -2500,6 +2500,9 @@
       'sidekick-c2-body': 'Build a brand voice once and let Olya generate on-brand posts, reels, and captions daily — in every language your market needs.',
       'sidekick-c3-headline': 'Look like a team of ten.',
       'sidekick-c3-body': 'Build your AI persona, set your tone, and let Olya handle daily content creation, scheduling, and reporting — while you focus on strategy.',
+      'terms-href': 'assets/docs/terms.pdf',
+      'privacy-href': 'assets/docs/privacy.pdf',
+      'ai-href': 'assets/docs/ai-disclosure.pdf',
     },
     fr: {
       'hero-tag':      'AI Content OS · Pré-lancement 2026',
@@ -2570,6 +2573,9 @@
       'sidekick-c2-body': 'Construisez une voix de marque une fois et laissez Olya générer des posts, reels et légendes quotidiennement.',
       'sidekick-c3-headline': 'Ressemblez à une équipe de dix.',
       'sidekick-c3-body': 'Créez votre persona IA, définissez votre ton et laissez Olya gérer la création de contenu, la planification et les rapports.',
+      'terms-href': 'assets/docs/terms-fr.pdf',
+      'privacy-href': 'assets/docs/privacy-fr.pdf',
+      'ai-href': 'assets/docs/ai-disclosure-fr.pdf',
     },
     de: {
       'hero-tag':      'AI Content OS · Vor dem Launch 2026',
@@ -2640,6 +2646,9 @@
       'sidekick-c2-body': 'Bauen Sie einmal eine Markenstimme auf und lassen Sie Olya täglich markenkonforme Posts, Reels und Bildunterschriften generieren.',
       'sidekick-c3-headline': 'Wirken Sie wie ein Team von zehn.',
       'sidekick-c3-body': 'Erstellen Sie Ihre KI-Persona, legen Sie Ihren Ton fest und lassen Sie Olya die tägliche Content-Erstellung übernehmen.',
+      'terms-href': 'assets/docs/terms-de.pdf',
+      'privacy-href': 'assets/docs/privacy-de.pdf',
+      'ai-href': 'assets/docs/ai-disclosure-de.pdf',
     },
     it: {
       'hero-tag':      'AI Content OS · Pre-lancio 2026',
@@ -2710,6 +2719,9 @@
       'sidekick-c2-body': 'Crea una voce del brand una volta e lascia che Olya generi post, reel e didascalie ogni giorno.',
       'sidekick-c3-headline': 'Sembrare un team di dieci.',
       'sidekick-c3-body': 'Crea la tua persona AI, imposta il tuo tono e lascia che Olya gestisca la creazione di contenuti, la pianificazione e i report.',
+      'terms-href': 'assets/docs/terms-it.pdf',
+      'privacy-href': 'assets/docs/privacy-it.pdf',
+      'ai-href': 'assets/docs/ai-disclosure-it.pdf',
     },
     es: {
       'hero-tag':      'AI Content OS · Pre-lanzamiento 2026',
@@ -2780,6 +2792,9 @@
       'sidekick-c2-body': 'Crea una voz de marca una vez y deja que Olya genere publicaciones, reels y pies de foto diariamente.',
       'sidekick-c3-headline': 'Parecer un equipo de diez.',
       'sidekick-c3-body': 'Crea tu persona de IA, establece tu tono y deja que Olya se encargue de la creación de contenido, la programación y los informes.',
+      'terms-href': 'assets/docs/terms-es.pdf',
+      'privacy-href': 'assets/docs/privacy-es.pdf',
+      'ai-href': 'assets/docs/ai-disclosure-es.pdf',
     },
   };
   (function () {
@@ -2789,6 +2804,16 @@
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
         var key = el.getAttribute('data-i18n');
         if (dict[key] != null) el.innerHTML = dict[key];
+      });
+      // Swap footer PDF links to localised versions
+      var linkMap = {
+        'footer-terms':   dict['terms-href'],
+        'footer-privacy': dict['privacy-href'],
+        'footer-ai':      dict['ai-href'],
+      };
+      document.querySelectorAll('.footer-link[data-i18n]').forEach(function(a) {
+        var key = a.getAttribute('data-i18n');
+        if (linkMap[key]) a.href = linkMap[key];
       });
       document.documentElement.lang = lang;
     }
