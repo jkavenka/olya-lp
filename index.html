@@ -2818,7 +2818,7 @@
     },
   };
   (function () {
-    var select = document.getElementById('lang-select');
+    // lang-select replaced by custom dropdown — getLang() reads from .lang-drop__item.is-active
     function applyLang(lang) {
       var dict = window.OLYA_I18N[lang] || window.OLYA_I18N.en;
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
@@ -2920,7 +2920,8 @@
     };
 
     function getLang() {
-      return document.getElementById('lang-select').value || 'en';
+      var active = document.querySelector('#nav-lang-drop .lang-drop__item.is-active');
+      return (active && active.dataset.lang) || 'en';
     }
 
     function showError(msg) {
@@ -3079,8 +3080,7 @@
     // Keep cookie bar text in sync when language switches
     // Patch the global applyLang to also update cookie text
     var selectEls = [
-      document.getElementById('lang-select'),
-      document.getElementById('footer-lang-select'),
+      document.getElementById('nav-lang-drop'),
     ];
     selectEls.forEach(function (sel) {
       if (!sel) return;
