@@ -1872,6 +1872,9 @@
       white-space: nowrap; border: 0;
     }
   </style>
+  <!-- Cloudflare Turnstile — invisible bot protection -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+
   <!-- Google Analytics — loads only after cookie consent is accepted -->
   <script>
   function loadGA(id) {
@@ -2424,6 +2427,9 @@
 
           </div>
 
+          <!-- Turnstile invisible widget — auto-challenges in background -->
+          <div id="turnstile-widget"></div>
+
           <button class="btn-primary cta-submit" type="submit" data-i18n="cta-submit">
             Join the waitlist
           </button>
@@ -2904,12 +2910,32 @@
   </script>
 
 
-  <!-- Form validation -->
+  <!-- Form validation + Turnstile -->
   <script>
   (function () {
     var form    = document.getElementById('waitlist-form');
     var errBox  = document.getElementById('form-error');
     if (!form) return;
+
+    // Initialise Turnstile invisible widget once API is ready
+    var turnstileWidgetId = null;
+    function initTurnstile() {
+      if (window.turnstile && document.getElementById('turnstile-widget')) {
+        turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: '0x4AAAAAADeV0U-IomLvwqKn',
+          size: 'invisible',
+        });
+      }
+    }
+    // Try immediately (in case script loaded before DOMContentLoaded)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTurnstile);
+    } else {
+      // Poll until Turnstile API is ready (deferred script)
+      var tsInterval = setInterval(function() {
+        if (window.turnstile) { clearInterval(tsInterval); initTurnstile(); }
+      }, 100);
+    }
 
     var ERRORS = {
       en: { name: 'Please enter your first name.', email: 'Please enter a valid email address.', terms: 'Please agree to the Terms of Service.' },
@@ -2966,11 +2992,21 @@
         return;
       }
 
-      // Show success immediately — fire-and-forget the POST
+      // Get Turnstile token
+      var cfToken = (turnstileWidgetId !== null && window.turnstile)
+        ? window.turnstile.getResponse(turnstileWidgetId) || ''
+        : '';
+
+      // Show success immediately — fire-and-forget POST
       var inner = document.querySelector('.cta-inner');
       if (inner) inner.style.display = 'none';
       var successEl = document.getElementById('form-success');
       if (successEl) successEl.style.display = 'flex';
+
+      // Reset Turnstile for future use
+      if (turnstileWidgetId !== null && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
 
       fetch('https://script.google.com/macros/s/AKfycbxBIKeLiSyhn1xZ1ULoapPMmkEwqFgRf_5zYo1J5gjzLwL2mCWHtRThYigrRdWp0BSZ/exec', {
         method: 'POST',
@@ -2981,6 +3017,7 @@
           email:   form.querySelector('#f-email').value.trim(),
           company: form.querySelector('#f-company').value.trim(),
           lang:    getLang(),
+          'cf-turnstile-response': cfToken,
         }),
       })
       .then(function () { /* success already shown */ })
