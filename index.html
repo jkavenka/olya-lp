@@ -416,19 +416,21 @@
         margin-right: -30px;
       }
       .hero-card-wrap:last-child { margin-right: 0; }
-      .card-tablet:nth-of-type(1) .hero-card { transform: rotate( 2.55deg); }
-      .card-tablet:nth-of-type(2) .hero-card { transform: rotate(-2.32deg); }
-      .card-tablet:nth-of-type(3) .hero-card { transform: rotate( 2.68deg); }
-      .card-tablet:nth-of-type(4) .hero-card { transform: rotate(-3.82deg); }
+      /* Tablet cards (children 6–9) — same angles as desktop */
+      .hero-card-wrap:nth-child(6)  .hero-card { transform: rotate(-3.10deg); }
+      .hero-card-wrap:nth-child(7)  .hero-card { transform: rotate( 2.46deg); }
+      .hero-card-wrap:nth-child(8)  .hero-card { transform: rotate(-1.56deg); }
+      .hero-card-wrap:nth-child(9)  .hero-card { transform: rotate( 2.09deg); }
 
       /* Tablet card size */
       .hero-card { width: 278px; height: 360px; }
 
       /* Tablet rotations */
-      .card-tablet:nth-of-type(1) .hero-card { transform: rotate( 2.55deg); }
-      .card-tablet:nth-of-type(2) .hero-card { transform: rotate(-2.32deg); }
-      .card-tablet:nth-of-type(3) .hero-card { transform: rotate( 2.68deg); }
-      .card-tablet:nth-of-type(4) .hero-card { transform: rotate(-3.82deg); }
+      /* Tablet cards (children 6–9) — same angles as desktop */
+      .hero-card-wrap:nth-child(6)  .hero-card { transform: rotate(-3.10deg); }
+      .hero-card-wrap:nth-child(7)  .hero-card { transform: rotate( 2.46deg); }
+      .hero-card-wrap:nth-child(8)  .hero-card { transform: rotate(-1.56deg); }
+      .hero-card-wrap:nth-child(9)  .hero-card { transform: rotate( 2.09deg); }
     }
 
     /* ══════════════════════════════════════════════════════════════
@@ -464,17 +466,13 @@
         margin-right: -40px;
       }
       .hero-card-wrap:last-child { margin-right: 0; }
-      .card-mobile:nth-of-type(1) .hero-card { transform: rotate( 2.01deg); }
-      .card-mobile:nth-of-type(2) .hero-card { transform: rotate(-2.55deg); }
-      .card-mobile:nth-of-type(3) .hero-card { transform: rotate( 5.19deg); }
-
       /* Mobile card size */
-      .hero-card { width: 240px; height: 320px; border-radius: 14px; }
+      .hero-card { width: 240px; height: 320px; border-radius: 0; }
 
-      /* Mobile rotations */
-      .card-mobile:nth-of-type(1) .hero-card { transform: rotate( 2.01deg); }
-      .card-mobile:nth-of-type(2) .hero-card { transform: rotate(-2.55deg); }
-      .card-mobile:nth-of-type(3) .hero-card { transform: rotate( 5.19deg); }
+      /* Mobile cards (children 10–12) — same angles as desktop */
+      .hero-card-wrap:nth-child(10) .hero-card { transform: rotate(-3.10deg); }
+      .hero-card-wrap:nth-child(11) .hero-card { transform: rotate( 2.46deg); }
+      .hero-card-wrap:nth-child(12) .hero-card { transform: rotate(-1.56deg); }
     }
 
 
