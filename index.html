@@ -682,11 +682,10 @@
       transition: background 0.12s, border-color 0.12s;
     }
     .field-checkbox__input:checked + .field-checkbox__box {
-      background: transparent;
-      border-color: transparent;
-      /* Show Figma checked state image */
-      background-image: url("https://www.figma.com/api/mcp/asset/58362694-e6b0-450e-8573-dfc101c57ab4");
-      background-size: 14px 14px;
+      background-color: var(--color-indigo-700);
+      border-color: var(--color-indigo-700);
+      background-image: url("assets/images/check-icon-white.svg");
+      background-size: 9px 9px;
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -2386,11 +2385,10 @@
         <h2 class="cta-headline" data-i18n="cta-headline">Be first in line</h2>
         <p class="cta-body" data-i18n="cta-body">Olya is launching in July 2026. We&#8217;re onboarding our founding users now &#8212; the agencies, brands, and creators who&#8217;ll shape the product and get lifetime early-access pricing.</p>
         <!-- arrow illustration -->
-        <!-- TODO: replace src with /assets/images/arrow.png once downloaded -->
         <div class="cta-arrow" aria-hidden="true">
           <div class="cta-arrow__inner">
             <img
-              src="https://www.figma.com/api/mcp/asset/dbb63ce2-38e8-4810-ad08-e58da29751ca"
+              src="assets/images/arrow.webp"
               alt=""
             />
           </div>
